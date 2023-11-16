@@ -38,7 +38,13 @@
                 width: '100%',
               }"
             >
-              <ConsoleComponent :testCases="item.result" />
+              <div
+                v-if="testLoading"
+                style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center"
+              >
+                <a-spin />
+              </div>
+              <ConsoleComponent v-else :testCases="item.result" />
             </div>
           </div>
           <div style="width: 100%">
@@ -58,31 +64,42 @@
 </template>
 
 <script setup lang="ts">
-import { onBeforeMount, ref } from 'vue';
+const props = defineProps({
+  lstIdBaiThi: {
+    type: Array<any>,
+    required: true,
+  },
+  lstbaiThiDauId: {
+    type: Array<any>,
+    required: true,
+  },
+  lstBaiThi: {
+    type: Array<any>,
+    required: true,
+  },
+});
+
+import { ref, watch } from 'vue';
 import MonacoEditor from './MonacoEditor.vue';
 import ConsoleComponent from './ConsoleComponent.vue';
 import * as thiDauAPI from '@/apiResources/thiDauAPI';
-const lstIdBaiThi = [1118];
-const lstbaiThiDauId = [9];
-const activeKey = ref(lstIdBaiThi[0]);
+const activeKey = ref(props.lstIdBaiThi[0]);
 
-const lstBaiThi = ref<any[]>([]);
 const dividerRight = ref();
 const runCodeResult = ref<any[]>([]);
+const testLoading = ref(false);
 
-onBeforeMount(async () => {
-  for (const iterator of lstIdBaiThi) {
-    const result = await thiDauAPI.getBaiDauById(iterator);
-    lstBaiThi.value.push(result);
+watch(props.lstBaiThi, () => {
+  for (const iterator of props.lstBaiThi) {
     dividerPosition.value.push(60);
-    //contentMonaco.value.push(result.codeMau.find((c: any) => c.ngonNguDauID == 1).codeTestUnitTest);
-    contentMonaco.value.push(result.codeMau.find((c: any) => c.ngonNguDauID == 1).codeDefault);
+    contentMonaco.value.push(iterator.codeMau.find((c: any) => c.ngonNguDauID == 1).codeDefault);
   }
-  runCodeResult.value = lstBaiThi.value.map((c) => ({
+
+  runCodeResult.value = props.lstBaiThi.map((c) => ({
     id: c.id,
     result: c.testCase.map((e: any) => ({
       testCase: e,
-      yourOutput: '',
+      isPass: false,
     })),
   }));
 });
@@ -91,24 +108,46 @@ const dividerPosition = ref<number[]>([]);
 const contentMonaco = ref<string[]>([]);
 
 const runCode = async () => {
+  if (testLoading.value) {
+    return;
+  }
+  testLoading.value = true;
   const result = await thiDauAPI.runCode(
-    contentMonaco.value[lstIdBaiThi.indexOf(activeKey.value)],
+    contentMonaco.value[props.lstIdBaiThi.indexOf(activeKey.value)],
     1,
-    lstbaiThiDauId[lstIdBaiThi.indexOf(activeKey.value)],
+    props.lstbaiThiDauId[props.lstIdBaiThi.indexOf(activeKey.value)],
   );
-  console.log(result);
+
+  var lstOutput: string[] = [];
+  result.result.split('\n').forEach((element: string) => {
+    const RightorWrong = element.split('Right or wrong')[1];
+    if (typeof RightorWrong !== 'undefined') {
+      lstOutput.push(RightorWrong.split(':')[1]);
+    }
+  });
+
+  const newResult = runCodeResult.value
+    .find((c) => c.id === activeKey.value)
+    .result.map((c: any, index: any) => ({
+      testCase: c.testCase,
+      isPass: lstOutput[index].trim() === 'Right',
+    }));
+
+  runCodeResult.value.find((c) => c.id === activeKey.value).result = newResult;
+
+  testLoading.value = false;
 };
 
 const handleDragging = (e: any) => {
   var element = document.getElementsByClassName('wrapper-right') as HTMLCollectionOf<HTMLElement>;
 
   const percentage = element
-    ? ((e.pageY - element[lstIdBaiThi.indexOf(activeKey.value)].offsetTop - 45) /
-        element[lstIdBaiThi.indexOf(activeKey.value)].offsetHeight) *
+    ? ((e.pageY - element[props.lstIdBaiThi.indexOf(activeKey.value)].offsetTop - 45) /
+        element[props.lstIdBaiThi.indexOf(activeKey.value)].offsetHeight) *
       100
     : 0;
   if (percentage >= 30 && percentage <= 80) {
-    dividerPosition.value[lstIdBaiThi.indexOf(activeKey.value)] = Number.parseFloat(percentage.toFixed(2));
+    dividerPosition.value[props.lstIdBaiThi.indexOf(activeKey.value)] = Number.parseFloat(percentage.toFixed(2));
   }
 };
 const startDragging = () => {

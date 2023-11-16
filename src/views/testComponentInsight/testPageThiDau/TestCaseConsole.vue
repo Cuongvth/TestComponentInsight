@@ -2,16 +2,19 @@
   <div style="overflow-y: scroll; height: 100%">
     <a-tabs v-model:activeKey="activeKey" tab-position="left" animated>
       <a-tab-pane v-for="(item, index) in lstTestCase" :key="index" :tab="'Case ' + (index + 1)">
-        <sdAlerts
-          v-for="(subitem, subindex) in item.parameter"
-          :key="subindex"
-          :outlined="false"
-          :closable="false"
-          :showIcon="false"
-          :message="subitem.name"
-          :description="JSON.stringify(subitem.value)"
-          type="info"
-        />
+        <h1 style="margin-top: 20px">
+          {{ item.isPass ? 'Correct Answer' : 'Wrong Answer' }}
+        </h1>
+        <div v-for="(subitem, subindex) in item.parameter" :key="subindex">
+          <sdAlerts
+            :outlined="false"
+            :closable="false"
+            :showIcon="false"
+            :message="subitem.name"
+            :description="JSON.stringify(subitem.value)"
+            type="info"
+          />
+        </div>
       </a-tab-pane>
     </a-tabs>
   </div>
@@ -40,8 +43,10 @@ onBeforeMount(() => {
         var propertyValue = JSON.parse(iterator.testCase.input)[propertyName];
         parameter.push({ name: propertyName, value: propertyValue });
       }
+
       lstTestCase.value.push({
         parameter,
+        isPass: iterator.isPass,
       });
     }
   }

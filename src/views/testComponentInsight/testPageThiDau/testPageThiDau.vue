@@ -7,7 +7,7 @@
           padding: '30px',
         }"
       >
-        <LeftComponent />
+        <LeftComponent :lst-bai-thi="lstBaiThi" :lst-id-bai-thi="lstIdBaiThi" />
       </div>
       <div
         id="divider"
@@ -22,16 +22,17 @@
           padding: '30px',
         }"
       >
-        <RightComponent />
+        <RightComponent :lst-bai-thi="lstBaiThi" :lst-id-bai-thi="lstIdBaiThi" :lstbai-thi-dau-id="lstbaiThiDauId" />
       </div>
     </div>
   </div>
 </template>
 
 <script setup lang="ts">
-import { ref } from 'vue';
+import { ref, onBeforeMount } from 'vue';
 import LeftComponent from './LeftComponent.vue';
 import RightComponent from './RightComponent.vue';
+import * as thiDauAPI from '@/apiResources/thiDauAPI';
 
 const dividerPosition = ref(30);
 
@@ -52,6 +53,17 @@ const startDragging = () => {
 const endDragging = () => {
   document.removeEventListener('mousemove', handleDragging);
 };
+
+const lstIdBaiThi = [2138, 2140, 2148];
+const lstbaiThiDauId = [1010];
+const lstBaiThi = ref<any[]>([]);
+
+onBeforeMount(async () => {
+  for (const iterator of lstIdBaiThi) {
+    const result = await thiDauAPI.getBaiDauById(iterator);
+    lstBaiThi.value.push(result);
+  }
+});
 </script>
 
 <style scoped>

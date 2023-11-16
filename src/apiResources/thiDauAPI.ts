@@ -22,13 +22,11 @@ export function getBaiDauById(id: number) {
   });
 }
 
-export function runCode(code: string, languageChoice: number, baiDauId: number) {
-  console.log(baiDauId);
-
+export function runCode(code: string, languageChoice: number, baiThiDauId: number) {
   const data = JSON.stringify({
     code: code,
     languageChoice: languageChoice,
-    baiDauId: baiDauId,
+    baiThiDauId: baiThiDauId,
   });
 
   return new Promise<any>((resolve: any, reject: any) => {
