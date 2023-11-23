@@ -102,7 +102,7 @@ watch(props.lstBaiThi, () => {
     dividerPosition.value.push(60);
     contentMonaco.value.push(
       iterator.codeMau
-        .find((c: any) => c.ngonNguDauID == 1)
+        .find((c: any) => c.ngonNguLapTrinhID == 1)
         .codeDefault.split('//!!!!!!!!!!Start')[1]
         .split('//!!!!!!!!!!End')[0]
         .trim(),
@@ -133,6 +133,7 @@ const runCode = async () => {
       1,
       props.lstbaiThiDauId[props.lstIdBaiThi.indexOf(activeKey.value)],
     );
+    console.log(result);
   } catch (error) {
     alert('Quá trình biên dịch xảy ra lỗi');
     testLoading.value = false;
