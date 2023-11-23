@@ -24,10 +24,6 @@ const props = defineProps({
   },
 });
 
-onBeforeMount(() => {
-  console.log(props.lstBaiThi);
-});
-
-import { onBeforeMount, ref } from 'vue';
+import { ref } from 'vue';
 const activeKey = ref(props.lstIdBaiThi[0]);
 </script>

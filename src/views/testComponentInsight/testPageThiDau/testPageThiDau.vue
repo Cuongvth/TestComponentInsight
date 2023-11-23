@@ -54,8 +54,8 @@ const endDragging = () => {
   document.removeEventListener('mousemove', handleDragging);
 };
 
-const lstIdBaiThi = [2138, 2140, 2148];
-const lstbaiThiDauId = [1010];
+const lstIdBaiThi = [2175];
+const lstbaiThiDauId = [1013];
 const lstBaiThi = ref<any[]>([]);
 
 onBeforeMount(async () => {

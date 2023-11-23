@@ -44,6 +44,12 @@
               >
                 <a-spin />
               </div>
+              <div
+                v-else-if="hasError"
+                style="width: 100%; height: 100%; display: flex; justify-content: center; align-items: center"
+              >
+                {{ error }}
+              </div>
               <ConsoleComponent v-else :testCases="item.result" />
             </div>
           </div>
@@ -88,11 +94,19 @@ const activeKey = ref(props.lstIdBaiThi[0]);
 const dividerRight = ref();
 const runCodeResult = ref<any[]>([]);
 const testLoading = ref(false);
+const error = ref();
+const hasError = ref(false);
 
 watch(props.lstBaiThi, () => {
   for (const iterator of props.lstBaiThi) {
     dividerPosition.value.push(60);
-    contentMonaco.value.push(iterator.codeMau.find((c: any) => c.ngonNguDauID == 1).codeDefault);
+    contentMonaco.value.push(
+      iterator.codeMau
+        .find((c: any) => c.ngonNguDauID == 1)
+        .codeDefault.split('//!!!!!!!!!!Start')[1]
+        .split('//!!!!!!!!!!End')[0]
+        .trim(),
+    );
   }
 
   runCodeResult.value = props.lstBaiThi.map((c) => ({
@@ -112,25 +126,33 @@ const runCode = async () => {
     return;
   }
   testLoading.value = true;
-  const result = await thiDauAPI.runCode(
-    contentMonaco.value[props.lstIdBaiThi.indexOf(activeKey.value)],
-    1,
-    props.lstbaiThiDauId[props.lstIdBaiThi.indexOf(activeKey.value)],
-  );
+  var result = null;
+  try {
+    result = await thiDauAPI.runCode(
+      contentMonaco.value[props.lstIdBaiThi.indexOf(activeKey.value)],
+      1,
+      props.lstbaiThiDauId[props.lstIdBaiThi.indexOf(activeKey.value)],
+    );
+  } catch (error) {
+    alert('Quá trình biên dịch xảy ra lỗi');
+    testLoading.value = false;
+    return;
+  }
 
-  var lstOutput: string[] = [];
-  result.result.split('\n').forEach((element: string) => {
-    const RightorWrong = element.split('Right or wrong')[1];
-    if (typeof RightorWrong !== 'undefined') {
-      lstOutput.push(RightorWrong.split(':')[1]);
-    }
-  });
+  if (result.errors !== undefined) {
+    hasError.value = true;
+    error.value = result.errors;
+    testLoading.value = false;
+    return;
+  }
+
+  var lstOutput = result.result.split('-');
 
   const newResult = runCodeResult.value
     .find((c) => c.id === activeKey.value)
     .result.map((c: any, index: any) => ({
       testCase: c.testCase,
-      isPass: lstOutput[index].trim() === 'Right',
+      isPass: lstOutput[index].replace('\n', '').trim() === '1',
     }));
 
   runCodeResult.value.find((c) => c.id === activeKey.value).result = newResult;
