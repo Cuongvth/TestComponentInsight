@@ -53,7 +53,7 @@ onMounted(() => {
   background: #21498c !important;
 }
 
-.mqFxk .ant-pagination-item-active a {
+.ant-pagination-item-active a {
   background-color: #297d9f !important;
 }
 
@@ -88,7 +88,7 @@ onMounted(() => {
   margin: 0 0 0 10px !important;
 }
 
-.mqFxk .ant-comment-content-detail p {
+.ant-comment-content-detail p {
   color: black !important;
 }
 
