@@ -70,9 +70,10 @@
                     useRoute().params.idMonHoc
                   }/baitap/${before}/lambaitap`"
                 >
-                  <div class="icon_to_btn">
+                  <sdButton html-type="submit" size="default" shape="circle" type="primary" style="width: 100%">
                     <unicon name="arrow-left"></unicon>
-                  </div>
+                    <span>Trước</span>
+                  </sdButton>
                 </router-link>
               </a-col>
               <a-col :span="8" :xxl="8" :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
@@ -82,16 +83,17 @@
                   }/baitap/${next}/lambaitap`"
                   replace
                 >
-                  <div class="icon_to_btn">
+                  <sdButton html-type="submit" size="default" shape="circle" type="primary" style="width: 100%">
+                    <span>Sau</span>
                     <unicon name="arrow-right"></unicon>
-                  </div>
+                  </sdButton>
                 </router-link>
               </a-col>
               <a-col :span="8" :xxl="8" :xl="8" :lg="12" :md="12" :sm="24" :xs="24">
                 <router-link :to="'/'">
-                  <div class="icon_to_btn">
+                  <sdButton html-type="submit" size="default" shape="circle" type="primary" style="width: 100%">
                     <unicon name="chat"></unicon>
-                  </div>
+                  </sdButton>
                 </router-link>
               </a-col>
             </a-row>
@@ -209,15 +211,3 @@ const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
 </script>
-
-<style scoped>
-.icon_to_btn {
-  background-color: #21498c;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  cursor: pointer;
-  padding: 5px;
-  border-radius: 20px;
-}
-</style>
