@@ -58,7 +58,7 @@
           </a-tabs>
         </a-col>
         <a-col :span="6" :xxl="6" :xl="6" :lg="6" :md="24" :sm="24" :xs="24">
-          <a-card>
+          <a-card class="card-item">
             <h4>Tác giả</h4>
             <p>{{ homework.author }}</p>
             <h4>Mức độ</h4>
@@ -99,7 +99,7 @@
             </a-row>
           </a-card>
           <div style="margin-top: 10px">
-            <a-card>
+            <a-card class="card-item">
               <div>
                 <a-form
                   :model="formState"
@@ -211,3 +211,10 @@ const onFinishFailed = (errorInfo: any) => {
   console.log('Failed:', errorInfo);
 };
 </script>
+
+<style scoped>
+.card-item {
+  border-radius: 10px;
+  border-width: 2px;
+}
+</style>
