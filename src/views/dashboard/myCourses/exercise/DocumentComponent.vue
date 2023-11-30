@@ -171,15 +171,12 @@ const downloadDocument = (link: String, type: String) => {
 .document_item {
   border-radius: 20px;
   border-width: 2px;
+  transition: transform 0.2s ease;
 }
 
 .document_item:hover {
-  background-color: #21498c;
   cursor: pointer;
-}
-
-.document_item:hover span {
-  color: white;
+  transform: translateY(-5px);
 }
 
 .fiLpOL.fiLpOL {

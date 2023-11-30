@@ -171,6 +171,7 @@ const preventSelection = (event: Event) => {
   border-radius: 10px;
   text-align: center;
   border-width: 2px;
+  transition: transform 0.2s ease;
 }
 
 .video-item img {
@@ -180,11 +181,7 @@ const preventSelection = (event: Event) => {
 }
 
 .video-item:hover {
-  background-color: #21498c;
-}
-
-.video-item:hover h4 {
-  color: white;
+  transform: translateY(-5px);
 }
 
 .fiLpOL.fiLpOL {

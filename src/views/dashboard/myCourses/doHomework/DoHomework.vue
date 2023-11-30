@@ -11,7 +11,12 @@
                   <p>{{ homework.content }}</p>
                 </a-collapse-panel>
                 <a-collapse-panel key="2" header="Mô tả">
-                  <a-card v-for="item in homework.file" :key="item.id">
+                  <a-card
+                    v-for="item in homework.file"
+                    :key="item.id"
+                    class="card-item"
+                    style="margin-top: 10px; background-color: rgba(225, 225, 225, 0.2)"
+                  >
                     <h4>{{ item.fileName }}</h4>
                     <p>{{ item.hint }}</p>
                   </a-card>
@@ -30,29 +35,46 @@
               </div>
             </a-tab-pane>
             <a-tab-pane key="2" tab="Đánh giá">
-              <div v-for="item in homework.rates" :key="item.id">
-                <a-comment>
-                  <template #actions>
-                    <a-rate v-model:value="item.rate" disabled="" />
-                  </template>
-                  <template #author
-                    ><a>{{ item.rateTitle }}</a></template
-                  >
-                  <template #avatar>
-                    <a-avatar :src="item.userAvatar" alt="Han Solo" />
-                  </template>
-                  <template #content>
-                    <p>
-                      {{ item.rateDescribe }}
-                    </p>
-                  </template>
-                  <template #datetime>
-                    <a-tooltip :title="dayjs().format('YYYY-MM-DD HH:mm:ss')">
-                      <span>{{ dayjs().fromNow() }}</span>
-                    </a-tooltip>
-                  </template>
-                </a-comment>
-              </div>
+              <a-row :gutter="[16, 10]">
+                <a-col
+                  :span="8"
+                  :xxl="8"
+                  :xl="8"
+                  :lg="12"
+                  :md="12"
+                  :sm="24"
+                  :xs="24"
+                  v-for="item in homework.rates"
+                  :key="item.id"
+                >
+                  <div>
+                    <a-card class="card-item">
+                      <a-comment>
+                        <template #author>
+                          <h4>{{ item.userName }}</h4>
+                        </template>
+                        <template #avatar>
+                          <a-avatar :src="item.userAvatar" />
+                        </template>
+                        <template #content>
+                          <p>
+                            {{ item.rateTitle }}
+                          </p>
+                          <a-rate v-model:value="item.rate" disabled="" />
+                          <p>
+                            {{ item.rateDescribe }}
+                          </p>
+                        </template>
+                        <template #datetime>
+                          <a-tooltip :title="dayjs().format('YYYY-MM-DD HH:mm:ss')">
+                            <span>{{ dayjs().fromNow() }}</span>
+                          </a-tooltip>
+                        </template>
+                      </a-comment>
+                    </a-card>
+                  </div>
+                </a-col>
+              </a-row>
             </a-tab-pane>
             <a-tab-pane key="3" tab="Hướng dẫn">{{ homework.hint }}</a-tab-pane>
           </a-tabs>
@@ -169,7 +191,8 @@ const homework = ref({
       date: new Date(),
       userName: 'Vũ Lạnh Cường',
       rate: 4,
-      rateDescribe: 'Good',
+      rateDescribe:
+        'Tạo một function component chứa thẻ h1 có nội dung sau: “I love VietNam”. Hiển thị nội dung đó trên trình duyệt.',
       rateTitle: 'Good',
       userAvatar:
         'https://c4.wallpaperflare.com/wallpaper/68/12/28/anime-mobile-suit-gundam-wing-wallpaper-preview.jpg',
@@ -179,7 +202,8 @@ const homework = ref({
       date: new Date(),
       userName: 'Vũ Lạnh Cường',
       rate: 4,
-      rateDescribe: 'Good',
+      rateDescribe:
+        'Tạo một function component chứa thẻ h1 có nội dung sau: “I love VietNam”. Hiển thị nội dung đó trên trình duyệt.',
       rateTitle: 'Good',
       userAvatar:
         'https://c4.wallpaperflare.com/wallpaper/68/12/28/anime-mobile-suit-gundam-wing-wallpaper-preview.jpg',
@@ -189,7 +213,8 @@ const homework = ref({
       date: new Date(),
       userName: 'Vũ Lạnh Cường',
       rate: 4,
-      rateDescribe: 'Good',
+      rateDescribe:
+        'Tạo một function component chứa thẻ h1 có nội dung sau: “I love VietNam”. Hiển thị nội dung đó trên trình duyệt.',
       rateTitle: 'Good',
       userAvatar:
         'https://c4.wallpaperflare.com/wallpaper/68/12/28/anime-mobile-suit-gundam-wing-wallpaper-preview.jpg',

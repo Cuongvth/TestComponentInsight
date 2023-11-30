@@ -60,4 +60,49 @@ onMounted(() => {
 .ant-radio-checked .ant-radio-inner {
   border-color: #297d9f !important;
 }
+
+.ant-tabs-tab {
+  border-radius: 10px;
+  padding: 10px 20px !important;
+}
+
+.ant-tabs-tab:hover .ant-tabs-tab-btn {
+  color: #21498c;
+}
+
+.ant-tabs-tab-btn {
+  font-weight: 600;
+}
+
+.ant-tabs-tab-active {
+  background-color: #21498c !important;
+  border-radius: 10px;
+  color: white !important;
+}
+
+.ant-tabs-tab-active .ant-tabs-tab-btn {
+  color: white !important;
+}
+
+.ant-tabs-tab + .ant-tabs-tab {
+  margin: 0 0 0 10px !important;
+}
+
+.mqFxk .ant-comment-content-detail p {
+  color: black !important;
+}
+
+.ant-comment-content-author-name > * {
+  color: black !important;
+}
+
+.ant-collapse-header {
+  background-color: #297d9f !important;
+  color: white !important;
+  font-weight: 600;
+}
+
+.ant-collapse-content-active {
+  background-color: #a4c2ce !important;
+}
 </style>
