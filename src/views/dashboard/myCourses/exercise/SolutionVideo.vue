@@ -1,44 +1,43 @@
 <template>
-  <a-card style="border-radius: 20px">
-    <a-row :gutter="[16, 10]">
-      <a-col :span="1" :xxl="1" :xl="1" :lg="1" :md="0" :sm="0" :xs="0">
-        <div class="flex-center">
-          <sdButton size="default" shape="circle" type="primary" @click="scrollLeft">
-            <unicon name="arrow-left" width="14"></unicon>
-          </sdButton>
+  <a-row :gutter="[16, 10]">
+    <a-col :span="1" :xxl="1" :xl="1" :lg="1" :md="0" :sm="0" :xs="0">
+      <div class="flex-center">
+        <sdButton size="default" shape="circle" type="primary" @click="scrollLeft">
+          <unicon name="arrow-left" width="14"></unicon>
+        </sdButton>
+      </div>
+    </a-col>
+    <a-col :span="22" :xxl="22" :xl="22" :lg="22" :md="24" :sm="24" :xs="24">
+      <h2 style="margin-top: 10px">Bài giảng</h2>
+      <div
+        class="scroll-container"
+        ref="scrollContainer"
+        @mousedown="startDrag"
+        @mousemove="drag"
+        @mouseup="stopDrag"
+        @selectstart="preventSelection"
+        @mouseleave="stopDrag"
+      >
+        <div style="min-width: 200px; margin: 20px 10px" v-for="item in lstVideo" :key="item.id">
+          <a :href="item.link" target="_blank" rel="noopener noreferrer">
+            <a-card class="video-item">
+              <h4>{{ item.title }}</h4>
+              <template #cover>
+                <img :src="item.img" />
+              </template>
+            </a-card>
+          </a>
         </div>
-      </a-col>
-      <a-col :span="22" :xxl="22" :xl="22" :lg="22" :md="24" :sm="24" :xs="23">
-        <div
-          class="scroll-container"
-          ref="scrollContainer"
-          @mousedown="startDrag"
-          @mousemove="drag"
-          @mouseup="stopDrag"
-          @selectstart="preventSelection"
-          @mouseleave="stopDrag"
-        >
-          <div style="min-width: 200px; margin: 20px 10px" v-for="item in lstVideo" :key="item.id">
-            <a :href="item.link" target="_blank" rel="noopener noreferrer">
-              <a-card class="video-item">
-                <h4>{{ item.title }}</h4>
-                <template #cover>
-                  <img :src="item.img" />
-                </template>
-              </a-card>
-            </a>
-          </div>
-        </div>
-      </a-col>
-      <a-col :span="1" :xxl="1" :xl="1" :lg="1" :md="0" :sm="0" :xs="0">
-        <div class="flex-center">
-          <sdButton size="default" shape="circle" type="primary" @click="scrollRight">
-            <unicon name="arrow-right" width="14"></unicon>
-          </sdButton>
-        </div>
-      </a-col>
-    </a-row>
-  </a-card>
+      </div>
+    </a-col>
+    <a-col :span="1" :xxl="1" :xl="1" :lg="1" :md="0" :sm="0" :xs="0">
+      <div class="flex-center">
+        <sdButton size="default" shape="circle" type="primary" @click="scrollRight">
+          <unicon name="arrow-right" width="14"></unicon>
+        </sdButton>
+      </div>
+    </a-col>
+  </a-row>
 </template>
 
 <script setup lang="ts">
@@ -153,11 +152,15 @@ const preventSelection = (event: Event) => {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-top: 20px;
 }
 
 .scroll-container {
   display: flex;
   overflow-x: hidden;
+  background-color: #a4c2ce;
+  padding: 0 20px;
+  border-radius: 20px;
 }
 
 .scroll-container:hover {
@@ -182,5 +185,9 @@ const preventSelection = (event: Event) => {
 
 .video-item:hover h4 {
   color: white;
+}
+
+.fiLpOL.fiLpOL {
+  background: #297d9f !important;
 }
 </style>

@@ -125,83 +125,95 @@ const pagination_total = (data.length % 5 === 0 ? data.length / 5 : Math.floor(d
 
 <template>
   <a-row :gutter="[16, 10]">
-    <a-col :span="20">
-      <a-list item-layout="horizontal" :data-source="result.slice((current - 1) * 5, current * 5)">
-        <template #renderItem="{ item }">
-          <div class="exercise_item">
-            <router-link
-              :to="`/hocvien/khoahoc/${useRoute().params.idKhoaHoc}/monhoc/${useRoute().params.idMonHoc}/baitap/${
-                item.id
-              }/lambaitap`"
-            >
-              <a-list-item>
-                <template #actions>
-                  <div class="flex-center">
-                    <unicon name="star" v-if="item.require" style="margin-right: 10px"></unicon>
-                    <sdButton size="default" shape="circle" type="primary">
-                      <span>Làm bài</span>
-                      <unicon name="arrow-right"></unicon>
-                    </sdButton>
-                  </div>
-                </template>
-                <a-list-item-meta style="border: 0">
-                  <template #title>
-                    <a-tag
-                      color="green"
-                      style="
-                        margin-top: 10px;
-                        padding: 5px 10px;
-                        display: flex;
-                        justify-content: center;
-                        max-width: 50px;
-                        border-radius: 10px;
-                      "
-                    >
-                      {{ item.lever }}
-                    </a-tag>
-                    <h3>{{ item.name }}</h3>
-                  </template>
-                  <template #description>
-                    <a-tag
-                      color="blue"
-                      v-for="tag in item.tag.map((c : any) => (c.label))"
-                      :key="tag"
-                      style="padding: 5px 10px; border-radius: 10px"
-                      >{{ tag }}</a-tag
-                    >
-                  </template>
-                </a-list-item-meta>
-              </a-list-item>
-            </router-link>
+    <a-col :span="1" :xxl="1" :xl="1" :lg="1" :md="0" :sm="0" :xs="0"> </a-col>
+    <a-col :span="22" :xxl="22" :xl="22" :lg="22" :md="24" :sm="24" :xs="24">
+      <h2 style="margin-top: 10px">Bài tập</h2>
+      <a-row :gutter="[16, 10]">
+        <a-col :span="18" :xxl="18" :xl="16" :lg="14" :md="24" :sm="24" :xs="24">
+          <a-list item-layout="horizontal" :data-source="result.slice((current - 1) * 5, current * 5)">
+            <template #renderItem="{ item }">
+              <div class="exercise_item">
+                <router-link
+                  :to="`/hocvien/khoahoc/${useRoute().params.idKhoaHoc}/monhoc/${useRoute().params.idMonHoc}/baitap/${
+                    item.id
+                  }/lambaitap`"
+                >
+                  <a-list-item>
+                    <template #actions>
+                      <div class="flex-center">
+                        <img
+                          src="https://upload.wikimedia.org/wikipedia/commons/thumb/6/63/Star%2A.svg/2234px-Star%2A.svg.png"
+                          alt=""
+                          width="30"
+                          v-if="item.require"
+                          style="margin-right: 20px"
+                        />
+                        <sdButton size="default" shape="circle" type="primary">
+                          <span>Làm bài</span>
+                          <unicon name="arrow-right"></unicon>
+                        </sdButton>
+                      </div>
+                    </template>
+                    <a-list-item-meta style="border: 0">
+                      <template #title>
+                        <a-tag
+                          color="green"
+                          style="
+                            padding: 5px 10px;
+                            display: flex;
+                            justify-content: center;
+                            max-width: 50px;
+                            border-radius: 10px;
+                          "
+                        >
+                          {{ item.lever }}
+                        </a-tag>
+                        <h3>{{ item.name }}</h3>
+                      </template>
+                      <template #description>
+                        <a-tag
+                          color="blue"
+                          v-for="tag in item.tag.map((c : any) => (c.label))"
+                          :key="tag"
+                          style="padding: 5px 10px; border-radius: 10px"
+                          >{{ tag }}</a-tag
+                        >
+                      </template>
+                    </a-list-item-meta>
+                  </a-list-item>
+                </router-link>
+              </div>
+            </template>
+          </a-list>
+          <div style="margin-top: 10px; display: flex; justify-content: center">
+            <a-pagination v-model:current="current" :total="pagination_total" show-less-items />
           </div>
-        </template>
-      </a-list>
+        </a-col>
+        <a-col :span="6" :xxl="6" :xl="8" :lg="10" :md="24" :sm="24" :xs="24">
+          <h3>Filter</h3>
+          <p>Ưu tiên</p>
+          <a-radio-group v-model:value="priority" @change="filterData">
+            <a-radio :value="item.value" v-for="item in lstpriority" :key="item.value" style="width: 100%">{{
+              item.label
+            }}</a-radio>
+          </a-radio-group>
+          <p>Tình trạng</p>
+          <a-radio-group v-model:value="status" @change="filterData">
+            <a-radio :value="item.value" v-for="item in lststatus" :key="item.value" style="width: 100%">{{
+              item.label
+            }}</a-radio>
+          </a-radio-group>
+          <p>Phần học</p>
+          <a-radio-group v-model:value="learning" @change="filterData">
+            <a-radio :value="item.value" v-for="item in lstlearning" :key="item.value" style="width: 100%">{{
+              item.label
+            }}</a-radio>
+          </a-radio-group>
+        </a-col>
+      </a-row>
     </a-col>
-    <a-col :span="4">
-      <h3>Filter</h3>
-      <p>Ưu tiên</p>
-      <a-radio-group v-model:value="priority" @change="filterData">
-        <a-radio :value="item.value" v-for="item in lstpriority" :key="item.value" style="width: 100%">{{
-          item.label
-        }}</a-radio>
-      </a-radio-group>
-      <p>Tình trạng</p>
-      <a-radio-group v-model:value="status" @change="filterData">
-        <a-radio :value="item.value" v-for="item in lststatus" :key="item.value" style="width: 100%">{{
-          item.label
-        }}</a-radio>
-      </a-radio-group>
-      <p>Phần học</p>
-      <a-radio-group v-model:value="learning" @change="filterData">
-        <a-radio :value="item.value" v-for="item in lstlearning" :key="item.value" style="width: 100%">{{
-          item.label
-        }}</a-radio>
-      </a-radio-group>
-    </a-col>
+    <a-col :span="1" :xxl="1" :xl="1" :lg="1" :md="0" :sm="0" :xs="0"> </a-col>
   </a-row>
-  <div style="margin-top: 10px">
-    <a-pagination v-model:current="current" :total="pagination_total" show-less-items />
-  </div>
 </template>
 
 <style scoped>
@@ -215,7 +227,9 @@ const pagination_total = (data.length % 5 === 0 ? data.length / 5 : Math.floor(d
 .exercise_item {
   border-radius: 20px;
   border: 2px solid #f0f0f0;
-  margin-top: 10px;
+  margin-bottom: 10px;
+  background-color: #a4c2ce;
+  padding: 5px 50px;
 }
 
 .exercise_item:hover {
@@ -224,5 +238,9 @@ const pagination_total = (data.length % 5 === 0 ? data.length / 5 : Math.floor(d
 
 .exercise_item:hover h3 {
   color: white;
+}
+
+.fiLpOL.fiLpOL {
+  background: #297d9f !important;
 }
 </style>

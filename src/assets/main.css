@@ -569,7 +569,7 @@ html[dir='rtl'] .ant-select-single.ant-select-show-arrow .ant-select-selection-i
 }
 
 .ant-pagination-item-active {
-  background-color: #8231D3 !important;
+  background-color: #8231D3;
 }
 
 .ant-pagination-item-active a {

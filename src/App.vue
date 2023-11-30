@@ -47,3 +47,17 @@ onMounted(() => {
     </Suspense>
   </ThemeProvider>
 </template>
+
+<style>
+.fiLpOL.fiLpOL {
+  background: #21498c !important;
+}
+
+.mqFxk .ant-pagination-item-active a {
+  background-color: #297d9f !important;
+}
+
+.ant-radio-checked .ant-radio-inner {
+  border-color: #297d9f !important;
+}
+</style>
