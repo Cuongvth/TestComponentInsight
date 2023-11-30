@@ -13,7 +13,7 @@
 </template>
 
 <script setup lang="ts">
-import { Main } from '../../styled';
+import { Main } from '../../../styled';
 import SolutionVideo from './SolutionVideo.vue';
 import DocumentComponent from './DocumentComponent.vue';
 import ExerciseComponent from './ExerciseComponent.vue';

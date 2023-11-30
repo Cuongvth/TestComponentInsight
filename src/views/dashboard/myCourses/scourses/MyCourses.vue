@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
-import { Main } from '../../styled';
+import { Main } from '../../../styled';
 import DialogRegisterToStudy from './DialogRegisterToStudy.vue';
 
 const initialData = [

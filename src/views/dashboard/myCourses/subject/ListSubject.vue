@@ -39,7 +39,7 @@
 </template>
 
 <script setup lang="ts">
-import { Main } from '../../styled';
+import { Main } from '../../../styled';
 import { useRoute } from 'vue-router';
 const scourses = 'React JS';
 

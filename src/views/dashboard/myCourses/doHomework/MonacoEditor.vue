@@ -18,7 +18,7 @@ const emit = defineEmits(['update:content']);
 
 import { onMounted } from 'vue';
 import * as editor from 'monaco-editor/esm/vs/editor/editor.api';
-import './userWorker';
+import '../configMonaco/userWorker';
 import { ref } from 'vue';
 
 const theme = 'vs';
@@ -38,3 +38,4 @@ onMounted(() => {
   });
 });
 </script>
+./configMonaco/userWorker

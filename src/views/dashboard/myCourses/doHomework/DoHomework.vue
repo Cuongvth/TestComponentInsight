@@ -126,7 +126,7 @@
 </template>
 
 <script setup lang="ts">
-import { Main } from '../../styled';
+import { Main } from '../../../styled';
 import MonacoEditor from './MonacoEditor.vue';
 import { ref } from 'vue';
 import { useRoute } from 'vue-router';
