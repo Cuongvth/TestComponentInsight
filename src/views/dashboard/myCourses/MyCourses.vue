@@ -79,8 +79,8 @@ const activeKey = ref('1');
 
 <template>
   <div>
+    <sdPageHeader title="Khóa học của tôi" class="ninjadash-page-header-main"></sdPageHeader>
     <Main>
-      <sdPageHeader title="Khóa học của tôi" class="ninjadash-page-header-main"></sdPageHeader>
       <a-tabs v-model:activeKey="activeKey">
         <a-tab-pane key="1" tab="Đã đăng ký">
           <a-col
@@ -101,7 +101,7 @@ const activeKey = ref('1');
                 </div>
                 <div class="d-flex w-100 justify-content-end">
                   <router-link :to="`/hocvien/khoahoc/${item.value}`">
-                    <sdButton size="default" shape="circle" type="primary">
+                    <sdButton size="default" shape="circle" type="primary" style="min-width: 150px">
                       <span>Vào học</span><span> </span>
                       <unicon name="arrow-right" width="14"></unicon>
                     </sdButton>

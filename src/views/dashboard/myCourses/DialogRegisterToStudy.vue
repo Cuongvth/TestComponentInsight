@@ -1,6 +1,6 @@
 <template>
   <div>
-    <sdButton size="default" shape="circle" type="primary" @click="showModal">
+    <sdButton size="default" shape="circle" type="primary" @click="showModal" style="min-width: 150px">
       <span>Đăng kí</span><span> </span>
       <unicon name="arrow-right" width="14"></unicon>
     </sdButton>

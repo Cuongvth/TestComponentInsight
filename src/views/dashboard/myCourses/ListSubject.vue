@@ -1,16 +1,16 @@
 <template>
   <div>
+    <sdPageHeader :title="scourses" class="ninjadash-page-header-main"></sdPageHeader>
     <Main>
-      <sdPageHeader :title="scourses" class="ninjadash-page-header-main"></sdPageHeader>
       <a-row :gutter="[16, 10]">
         <a-col
           :span="4"
           :xxl="4"
-          :xl="4"
-          :lg="8"
-          :md="8"
-          :sm="12"
-          :xs="12"
+          :xl="5"
+          :lg="6"
+          :md="7"
+          :sm="8"
+          :xs="9"
           v-for="subject in subjects"
           :key="subject.title"
         >
@@ -21,7 +21,8 @@
                 <unicon name="arrow-right" width="14"></unicon>
               </sdButton>
             </router-link>
-            <a-card :title="subject.title">
+            <a-card class="subject-item">
+              <h4>{{ subject.title }}</h4>
               <template #cover>
                 <img alt="example" :src="subject.logo" />
               </template>
@@ -98,5 +99,14 @@ const subjects = [
   visibility: visible;
   bottom: 50%;
   transform: translate(-50, -50%);
+}
+
+.subject-item {
+  border-radius: 20px;
+  border-width: 2px;
+}
+
+.subject-item img {
+  border-radius: 20px;
 }
 </style>

@@ -8,24 +8,24 @@
           </sdButton>
         </div>
       </a-col>
-      <a-col :span="22" :xxl="22" :xl="22" :lg="22" :md="24" :sm="24" :xs="23">
+      <a-col :span="22" :xxl="22" :xl="22" :lg="22" :md="24" :sm="24" :xs="24">
         <div
           class="scroll-container"
           ref="scrollContainer"
           @mousedown="startDrag"
           @mousemove="drag"
           @mouseup="stopDrag"
-          @selectstart="preventSelection"
           @mouseleave="stopDrag"
+          @selectstart="preventSelection"
         >
           <div style="min-width: 200px; margin: 20px 10px" v-for="item in lstVideo" :key="item.id">
-            <a :href="item.link" target="_blank" rel="noopener noreferrer">
-              <a-card class="video_item" :title="item.title">
-                <template #cover>
-                  <img :src="item.img" />
-                </template>
-              </a-card>
-            </a>
+            <a-card class="document_item" @click="downloadDocument(item.link, item.type)">
+              <div class="flex-center">
+                <unicon name="file-alt"></unicon>
+                <span>{{ item.fileName }}</span>
+                <unicon name="arrow-to-bottom"></unicon>
+              </div>
+            </a-card>
           </div>
         </div>
       </a-col>
@@ -47,62 +47,62 @@ const scrollContainer = ref();
 const lstVideo = [
   {
     id: 1,
-    title: 'Hook nemo',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+    type: 'powerpoint',
+    fileName: 'File name',
     link: 'http://',
   },
   {
     id: 2,
-    title: 'Hook nemo',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+    type: 'powerpoint',
+    fileName: 'File name',
     link: 'http://',
   },
   {
     id: 3,
-    title: 'Hook nemo',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+    type: 'powerpoint',
+    fileName: 'File name',
     link: 'http://',
   },
   {
     id: 4,
-    title: 'Hook nemo',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+    type: 'powerpoint',
+    fileName: 'File name',
     link: 'http://',
   },
   {
     id: 5,
-    title: 'Hook nemo',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+    type: 'powerpoint',
+    fileName: 'File name',
     link: 'http://',
   },
   {
     id: 6,
-    title: 'Hook nemo',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+    type: 'powerpoint',
+    fileName: 'File name',
     link: 'http://',
   },
   {
     id: 7,
-    title: 'Hook nemo',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+    type: 'powerpoint',
+    fileName: 'File name',
     link: 'http://',
   },
   {
     id: 8,
-    title: 'Hook nemo',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+    type: 'powerpoint',
+    fileName: 'File name',
     link: 'http://',
   },
   {
     id: 9,
-    title: 'Hook nemo',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+    type: 'powerpoint',
+    fileName: 'File name',
     link: 'http://',
   },
   {
     id: 10,
-    title: 'Hook nemo',
-    img: 'https://gw.alipayobjects.com/zos/rmsportal/JiqGstEfoWAOHiTxclqi.png',
+    type: 'powerpoint',
+    fileName: 'File name',
     link: 'http://',
   },
 ];
@@ -144,13 +144,16 @@ const stopDrag = () => {
 const preventSelection = (event: Event) => {
   event.preventDefault();
 };
+const downloadDocument = (link: String, type: String) => {
+  console.log(link, type);
+};
 </script>
 
 <style scoped>
 .flex-center {
   height: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: space-around;
   align-items: center;
 }
 
@@ -163,20 +166,18 @@ const preventSelection = (event: Event) => {
   cursor: pointer;
 }
 
-.video_item {
-  border-radius: 10px;
+.document_item {
+  border-radius: 20px;
+  padding: 15px 0;
+  border-width: 2px;
 }
 
-.video_item img {
-  border-bottom-left-radius: 10px;
-  border-bottom-right-radius: 10px;
-}
-
-.video_item:hover {
+.document_item:hover {
   background-color: #21498c;
+  cursor: pointer;
 }
 
-.video_item:hover span {
+.document_item:hover span {
   color: white;
 }
 </style>

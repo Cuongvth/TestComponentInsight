@@ -26,23 +26,23 @@ export default [
       },
       {
         path: 'khoahoc',
-        name: 'myScourses',
-        component: () => import('@/views/dashboard/myScourses/MyScourses.vue'),
+        name: 'myCourses',
+        component: () => import('@/views/dashboard/myCourses/MyCourses.vue'),
       },
       {
         path: 'khoahoc/:id',
         name: 'listSubject',
-        component: () => import('@/views/dashboard/myScourses/ListSubject.vue'),
+        component: () => import('@/views/dashboard/myCourses/ListSubject.vue'),
       },
       {
         path: 'khoahoc/:idKhoaHoc/monhoc/:idMonHoc',
         name: 'listExercise',
-        component: () => import('@/views/dashboard/myScourses/ListExercise.vue'),
+        component: () => import('@/views/dashboard/myCourses/ListExercise.vue'),
       },
       {
         path: 'khoahoc/:idKhoaHoc/monhoc/:idMonHoc/baitap/:idBaiTap/lambaitap',
         name: 'doHomework',
-        component: () => import('@/views/dashboard/myScourses/DoHomework.vue'),
+        component: () => import('@/views/dashboard/myCourses/DoHomework.vue'),
       },
     ],
   },
