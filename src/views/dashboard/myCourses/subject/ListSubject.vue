@@ -21,6 +21,7 @@
                 <unicon name="arrow-right" width="14"></unicon>
               </sdButton>
             </router-link>
+            <div class="blank-div"></div>
             <a-card class="subject-item">
               <h4>{{ subject.title }}</h4>
               <template #cover>
@@ -87,7 +88,7 @@ const subjects = [
   position: absolute;
   bottom: 0;
   left: 50%;
-  transform: translate(-50%);
+  transform: translate(-50%, 50%);
   opacity: 0;
   visibility: hidden;
   z-index: 10;
@@ -98,7 +99,10 @@ const subjects = [
   opacity: 1;
   visibility: visible;
   bottom: 50%;
-  transform: translate(-50, -50%);
+}
+
+.hover-div:hover .blank-div {
+  display: block;
 }
 
 .subject-item {
@@ -108,5 +112,17 @@ const subjects = [
 
 .subject-item img {
   border-radius: 20px;
+}
+
+.blank-div {
+  background-color: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  bottom: 0;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 2;
+  border-radius: 20px;
+  display: none;
 }
 </style>
