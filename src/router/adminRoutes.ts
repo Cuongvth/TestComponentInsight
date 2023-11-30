@@ -1,7 +1,9 @@
-import Apps from './Applications';
+import studentRoutes from './studentRoutes';
 import Features from './FeaturesRoutes';
 import Pages from './PageRoutes';
 import Components from './Components';
+import App from './Applications';
+import UserRoutes from './UserRoutes';
 
 const routes = [
   {
@@ -10,9 +12,14 @@ const routes = [
     component: () => import('@/views/dashboard/Dashboard.vue'),
     children: [
       {
-        path: '',
+        path: 'main',
         name: 'home',
-        component: () => import('@/views/dashboard/DemoOne.vue'),
+        component: () => import('@/views/dashboard/demoBangTin/DemoBangTin.vue'),
+      },
+      {
+        path: '',
+        name: 'demoBangTin',
+        component: () => import('@/views/dashboard/demoBangTin/DemoBangTin.vue'),
       },
       {
         path: 'demo-one',
@@ -63,7 +70,9 @@ const routes = [
       },
     ],
   },
-  ...Apps,
+  ...studentRoutes,
+  ...UserRoutes,
+  ...App,
   ...Features,
   ...Pages,
   ...Components,

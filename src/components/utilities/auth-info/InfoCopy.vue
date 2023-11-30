@@ -28,32 +28,32 @@ const onFlagChangeHandle = (value: any) => {
     <SearchBar />
     <Message />
     <Notification />
-    <!-- <Settings /> -->
+    <Settings />
     <!-- <Support /> -->
     <div class="ninjadash-nav-actions__item ninjadash-nav-actions__language">
       <sdDropdown placement="bottomRight" :action="['click']">
         <template v-slot:overlay>
           <NavAuth>
-            <router-link @click="() => onFlagChangeHandle('vi')" to="#">
-              <img style="width: 20px" :src="'https://cdn-icons-png.flaticon.com/512/323/323319.png'" alt="" />
-              <span>Vietnames</span>
-            </router-link>
-            <router-link @click="() => onFlagChangeHandle('jp')" to="#">
-              <img style="width: 20px" :src="'https://cdn-icons-png.flaticon.com/512/197/197374.png'" alt="" />
+            <router-link @click="() => onFlagChangeHandle('english')" to="#">
+              <img :src="'/src/assets/img/flag/english.png'" alt="" />
               <span>English</span>
             </router-link>
-            <router-link @click="() => onFlagChangeHandle('english')" to="#">
-              <img style="width: 20px" :src="'https://cdn-icons-png.flaticon.com/512/4852/4852821.png'" alt="" />
-              <span>Korean</span>
+            <router-link @click="() => onFlagChangeHandle('germany')" to="#">
+              <img :src="'/src/assets/img/flag/germany.png'" alt="" />
+              <span>Germany</span>
             </router-link>
-            <router-link @click="() => onFlagChangeHandle('english')" to="#">
-              <img style="width: 20px" :src="'https://cdn-icons-png.flaticon.com/512/552/552051.png'" alt="" />
-              <span>Japanese</span>
+            <router-link @click="() => onFlagChangeHandle('spain')" to="#">
+              <img :src="'/src/assets/img/flag/spain.png'" alt="" />
+              <span>Spain</span>
+            </router-link>
+            <router-link @click="() => onFlagChangeHandle('turky')" to="#">
+              <img :src="'/src/assets/img/flag/turky.png'" alt="" />
+              <span>Turky</span>
             </router-link>
           </NavAuth>
         </template>
         <a to="#" class="ninjadash-nav-action-link">
-          <img style="width: 20px" :src="'https://cdn-icons-png.flaticon.com/512/323/323319.png'" alt="" />
+          <img :src="`/src/assets/img/flag/${flag}.png`" alt="" />
         </a>
       </sdDropdown>
     </div>
@@ -66,16 +66,16 @@ const onFlagChangeHandle = (value: any) => {
               <figure class="user-dropdown__info">
                 <img :src="'/src/assets/img/avatar/chat-auth.png'" alt="" />
                 <figcaption>
-                  <sdHeading as="h5">Admin</sdHeading>
+                  <sdHeading as="h5">J. Watson</sdHeading>
                   <p>Support Engineer</p>
                 </figcaption>
               </figure>
               <ul class="user-dropdown__links">
                 <li>
-                  <a to="#"> <unicon name="user"></unicon> Profile </a>
+                  <a to="#"> <unicon name="user"></unicon> Tài khoảng </a>
                 </li>
                 <li>
-                  <a to="#"> <unicon name="bell"></unicon> Help </a>
+                  <a to="#"> <unicon name="bell"></unicon> Hỗ trợ </a>
                 </li>
               </ul>
               <a @click="SignOut" class="user-dropdown__bottomAction" href="#"> <LogoutOutlined /> Sign Out </a>
@@ -84,7 +84,7 @@ const onFlagChangeHandle = (value: any) => {
         </template>
         <a to="#" class="ninjadash-nav-action-link">
           <a-avatar :src="'/src/assets/img/avatar/chat-auth.png'" />
-          <span class="ninjadash-nav-actions__author--name">Admin</span>
+          <span class="ninjadash-nav-actions__author--name">Watson</span>
           <unicon name="angle-down"></unicon>
         </a>
       </sdPopover>

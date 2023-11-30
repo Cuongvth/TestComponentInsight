@@ -66,12 +66,12 @@ export default [
       {
         path: 'form-layout',
         name: 'formLayout',
-        component: () => import('@/views/forms/FormLayout.vue'),
+        component: () => import('../views/forms/FormLayout.vue'),
       },
       {
         path: 'form-elements',
         name: 'formElements',
-        component: () => import('@/views/forms/FormElements.vue'),
+        component: () => import('../views/forms/FormElements.vue'),
       },
       {
         path: 'form-components',
@@ -149,7 +149,7 @@ export default [
         name: 'unicons',
         component: () => import('@/views/icons/Unicons.vue'),
       },
-			{
+      {
         path: 'featherIcons',
         name: 'featherIcons',
         component: () => import('@/views/icons/FeatherIcons.vue'),

@@ -62,52 +62,6 @@ export default [
     ],
   },
   {
-    path: '/app/chat',
-    name: 'chat',
-    component: () => import('../views/apps/chat/ChatApp.vue'),
-    children: [
-      {
-        name: 'private',
-        path: 'private',
-        component: () => import('../views/apps/chat/overview/PrivateChat.vue'),
-      },
-      {
-        name: 'privateSingle',
-        path: 'private/:id',
-        components: {
-          default: () => import('../views/apps/chat/overview/PrivateChat.vue'),
-          child: () => import('../views/apps/chat/overview/SingleChat.vue'),
-        },
-      },
-      {
-        name: 'group',
-        path: 'group',
-        component: () => import('../views/apps/chat/overview/GroupChat.vue'),
-      },
-      {
-        name: 'groupSingle',
-        path: 'group/:id',
-        components: {
-          default: () => import('../views/apps/chat/overview/GroupChat.vue'),
-          child: () => import('../views/apps/chat/overview/SingleGroupChat.vue'),
-        },
-      },
-      {
-        name: 'all',
-        path: 'all',
-        component: () => import('../views/apps/chat/overview/AllContacts.vue'),
-      },
-      {
-        name: 'allSingle',
-        path: 'all/:id',
-        components: {
-          default: () => import('../views/apps/chat/overview/AllContacts.vue'),
-          child: () => import('../views/apps/chat/overview/SingleChat.vue'),
-        },
-      },
-    ],
-  },
-  {
     name: 'ecommerce',
     path: '/app',
     component: () => import('../views/apps/ecommerce/Index.vue'),
@@ -234,12 +188,12 @@ export default [
       {
         path: 'project-grid',
         name: 'project-grid',
-        component: () => import('../views/apps/project/overview/Grid.vue')
+        component: () => import('../views/apps/project/overview/Grid.vue'),
       },
       {
         path: 'project-list',
         name: 'project-list',
-        component: () => import('../views/apps/project/overview/List.vue')
+        component: () => import('../views/apps/project/overview/List.vue'),
       },
     ],
   },
@@ -310,7 +264,6 @@ export default [
     name: 'jobDetails',
     path: '/app/jobDetails/:id',
     component: () => import('../views/apps/jobSearch/JobSearchDetails.vue'),
-
   },
   {
     name: 'apply',

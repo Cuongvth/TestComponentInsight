@@ -9,14 +9,14 @@ const routes: Array<RouteRecordRaw> = [
   {
     name: 'Admin',
     path: '/',
-    component: () => import('../layout/AdminLayout.vue'),
+    component: () => import('@/layoutdemo/AdminLayout.vue'),
     children: [...adminRoutes],
     meta: { auth: false },
   },
   {
     name: 'Auth',
     path: '/auth',
-    component: () => import('../layout/AuthLayout.vue'),
+    component: () => import('@/layout/AuthLayout.vue'),
     children: [...authRoutes],
     meta: { auth: true },
   },

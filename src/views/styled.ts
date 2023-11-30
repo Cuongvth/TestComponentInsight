@@ -2183,6 +2183,36 @@ const TableWrapper = Styled.div`
                             background: ${({ theme }) => theme['danger-color']}10;
                         }
                     }
+                    .ant-list {
+                        visibility: hidden;
+                        position: absolute !important;
+                        min-width: 150px;
+                        boder: 1px solid black !important;
+                        background:#fff;
+                        border: 1px solid red !important;
+                        border-radius: 5px !important;
+                        padding: 10px 10px;
+                        top:0;
+                        left: -9rem;
+                        transition: 0.5s all;
+                        opacity: 0;
+                    }
+                    .ant-list  div{
+                        display: flex;
+                        padding: 10xp 10px;
+                        width: 100%;
+                        justify-content: space-between;
+                        align-content: center;
+                    }
+                    .center .active{
+                        opacity: 1;
+                        visibility: visible;
+                        left: -10.5rem;
+                    }
+                    .center{
+                        text-align: center;
+                        position: relative;
+                    }
                     .table-actions{
                         a {
                             svg, i{
@@ -2364,6 +2394,11 @@ const TableWrapper = Styled.div`
             margin: 8px;
         }
     }
+    .row-course{
+        display: grid;
+        grid-template-columns:1fr 1fr;
+        gap: 2px;
+    }
     .ninjadash-status{
         display: inline-flex;
         align-items: center;
@@ -2378,9 +2413,33 @@ const TableWrapper = Styled.div`
             color: ${({ theme }) => theme['success-color']};
             background-color: ${({ theme }) => theme['success-color']}15;
         }
+        &.ninjadash-status-HocVien{
+            color: #fff;
+            background-color: ${({ theme }) => theme['success-color']};
+        }
         &.ninjadash-status-deactiveted{
             color: ${({ theme }) => theme['warning-color']};
             background-color: ${({ theme }) => theme['warning-color']}15;
+        }
+        &.ninjadash-status-Marketing{
+            color: #fff;
+            background-color: ${({ theme }) => theme['warning-color']};
+        }
+        &.ninjadash-status-Admin{
+            color:#fff;
+            background-color: #ff4757;
+        }
+        &.ninjadash-status-orange{
+            color:#fff;
+            background-color: #ffa502;
+        }
+        &.ninjadash-status-google{
+            color: #fff;
+            background-color: #1e90ffd9;
+        }
+        &.ninjadash-status-TroGiang{
+            color: #fff;
+            background-color: #1e90ffd9;
         }
         &.ninjadash-status-blocked{
             color: ${({ theme }) => theme['danger-color']};
