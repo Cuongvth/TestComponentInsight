@@ -21,31 +21,6 @@ const routes = [
         name: 'demoBangTin',
         component: () => import('@/views/dashboard/demoBangTin/DemoBangTin.vue'),
       },
-      {
-        path: 'demo-one',
-        name: 'demoOne',
-        component: () => import('@/views/dashboard/DemoOne.vue'),
-      },
-      {
-        path: 'demo-two',
-        name: 'demoTwo',
-        component: () => import('@/views/dashboard/DemoTwo.vue'),
-      },
-      {
-        path: 'demo-three',
-        name: 'demoThree',
-        component: () => import('@/views/dashboard/DemoThree.vue'),
-      },
-      {
-        path: 'demo-four',
-        name: 'demoFour',
-        component: () => import('@/views/dashboard/DemoFour.vue'),
-      },
-      {
-        path: 'demo-five',
-        name: 'demoFive',
-        component: () => import('@/views/dashboard/DemoFive.vue'),
-      },
     ],
   },
   {
