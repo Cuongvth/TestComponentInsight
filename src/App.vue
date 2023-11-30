@@ -97,12 +97,13 @@ onMounted(() => {
 }
 
 .ant-collapse-header {
-  background-color: #297d9f !important;
+  background-color: #21498c !important;
   color: white !important;
   font-weight: 600;
+  border-radius: 5px !important;
 }
 
 .ant-collapse-content-active {
-  background-color: #a4c2ce !important;
+  background-color: white !important;
 }
 </style>
