@@ -327,17 +327,24 @@ const sortOption = columns.flatMap((c) => {
 <style>
 .collapse-ranktable .ant-collapse {
   border-width: 2px;
+  border-radius: 20px;
+  box-shadow: 1px 1px 1px 1px #f0f0f0;
 }
 
-.collapse-ranktable .ant-collapse {
-  border-width: 2px;
+.collapse-ranktable .ant-collapse-content {
+  border-bottom-left-radius: 20px !important;
+  border-bottom-right-radius: 20px !important;
+}
+
+.collapse-ranktable .ant-collapse-item {
+  border-radius: 20px !important;
 }
 
 .collapse-ranktable .ant-collapse-header {
   background-color: white !important;
   color: black !important;
   font-weight: 600;
-  border-radius: 5px !important;
+  border-radius: 20px !important;
 }
 
 .collapse-ranktable .ant-collapse-header .ant-collapse-arrow {
@@ -346,6 +353,10 @@ const sortOption = columns.flatMap((c) => {
 
 .collapse-ranktable .ant-collapse-content-active {
   background-color: white !important;
+}
+
+.ant-select-dropdown .ant-select-item.ant-select-item-option-selected .ant-select-item-option-content {
+  color: #eb763c !important;
 }
 
 .table-data .ant-table-thead > tr > th {
@@ -370,26 +381,6 @@ const sortOption = columns.flatMap((c) => {
 
 .table-data .ant-table-pagination {
   display: none !important;
-}
-
-.input-filter .unicon svg {
-  fill: #eb763c !important;
-}
-
-.input-filter .ant-select-selector {
-  height: 50px;
-  border-radius: 25px !important;
-  background-color: #ecf0f3 !important;
-  padding: 1px 15px !important;
-}
-
-.input-filter .ant-select-selection-item {
-  background-color: #eb763c !important;
-  border-radius: 5px !important;
-}
-
-.input-filter .ant-select-selection-item-content {
-  font-weight: 600;
 }
 
 .table-data .ant-table-cell {
