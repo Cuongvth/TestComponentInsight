@@ -17,7 +17,7 @@
                   @change="handleSearch"
                 ></a-select>
                 <a-select
-                  style="width: 100%"
+                  style="width: 100%; margin-top: 5px"
                   v-model:value="searchKhoaHoc"
                   :options="uniqueKhoaHoc.map((c) => ({ value: c, label: c }))"
                   @change="handleSearch"
@@ -30,7 +30,7 @@
                   @change="handleSearch"
                 ></a-select>
                 <a-select
-                  style="width: 100%"
+                  style="width: 100%; margin-top: 5px"
                   v-model:value="directionSelect"
                   :options="[
                     { value: 'asc', label: 'Tăng dần' },
