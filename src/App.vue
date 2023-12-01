@@ -130,4 +130,8 @@ onMounted(() => {
 .ant-table-pagination {
   display: none !important;
 }
+
+.unicon svg {
+  fill: #eb763c !important;
+}
 </style>

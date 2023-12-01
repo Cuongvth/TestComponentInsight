@@ -140,7 +140,7 @@ const columns = [
     key: 'key',
   },
   {
-    title: 'ElloCoding',
+    title: 'Ello Coding',
     dataIndex: 'elloCoding',
     key: 'elloCoding',
   },
@@ -179,20 +179,20 @@ const columns = [
 
 .icon-search {
   position: absolute;
-  right: 5px;
+  right: 8px;
   top: 50%;
   transform: translateY(-50%);
   background-color: white;
   border-radius: 25px;
-  height: 40px;
-  width: 40px;
+  height: 34px;
+  width: 34px;
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
 .table-data {
-  margin-top: 10px;
+  margin-top: 20px;
   border-radius: 20px;
 }
 </style>
