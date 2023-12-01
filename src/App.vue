@@ -95,48 +95,4 @@ onMounted(() => {
 .ant-comment-content-author-name > * {
   color: black !important;
 }
-
-.ant-table-thead > tr > th {
-  background: #eb763c !important;
-}
-
-.ant-table-thead > tr:first-child > th:first-child {
-  border-top-left-radius: 8px !important;
-}
-
-.ant-table-thead > tr:last-child > th:last-child {
-  border-top-right-radius: 8px !important;
-}
-
-.ant-table-tbody > tr:last-child > td:first-child {
-  border-bottom-left-radius: 8px !important;
-}
-
-.ant-table-tbody > tr:last-child > td:last-child {
-  border-bottom-right-radius: 8px !important;
-}
-
-.ant-table-pagination {
-  display: none !important;
-}
-
-.input-filter .unicon svg {
-  fill: #eb763c !important;
-}
-
-.input-filter .ant-select-selector {
-  height: 50px;
-  border-radius: 25px !important;
-  background-color: #ecf0f3 !important;
-  padding: 1px 15px !important;
-}
-
-.input-filter .ant-select-selection-item {
-  background-color: #eb763c !important;
-  border-radius: 5px !important;
-}
-
-.input-filter .ant-select-selection-item-content {
-  font-weight: 600;
-}
 </style>

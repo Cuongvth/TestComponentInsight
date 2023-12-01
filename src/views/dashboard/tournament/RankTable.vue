@@ -214,6 +214,7 @@ const handleSearch = () => {
   pagination.value.current = 1;
   pageOption.value = generateArrayOfStrings();
   pageIndex.value = 1;
+  activeKey.value = [];
 };
 
 const columns = [
@@ -344,5 +345,54 @@ const sortOption = columns.flatMap((c) => {
 
 .collapse-ranktable .ant-collapse-content-active {
   background-color: white !important;
+}
+
+.table-data .ant-table-thead > tr > th {
+  background: #eb763c !important;
+}
+
+.table-data .ant-table-thead > tr:first-child > th:first-child {
+  border-top-left-radius: 8px !important;
+}
+
+.table-data .ant-table-thead > tr:last-child > th:last-child {
+  border-top-right-radius: 8px !important;
+}
+
+.table-data .ant-table-tbody > tr:last-child > td:first-child {
+  border-bottom-left-radius: 8px !important;
+}
+
+.table-data .ant-table-tbody > tr:last-child > td:last-child {
+  border-bottom-right-radius: 8px !important;
+}
+
+.table-data .ant-table-pagination {
+  display: none !important;
+}
+
+.input-filter .unicon svg {
+  fill: #eb763c !important;
+}
+
+.input-filter .ant-select-selector {
+  height: 50px;
+  border-radius: 25px !important;
+  background-color: #ecf0f3 !important;
+  padding: 1px 15px !important;
+}
+
+.input-filter .ant-select-selection-item {
+  background-color: #eb763c !important;
+  border-radius: 5px !important;
+}
+
+.input-filter .ant-select-selection-item-content {
+  font-weight: 600;
+}
+
+.table-data .ant-table-cell {
+  font-weight: 500 !important;
+  text-align: center;
 }
 </style>
