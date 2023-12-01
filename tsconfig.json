@@ -15,6 +15,7 @@
     "types/*.d.ts"
   ],
   "compilerOptions": {
+    "ignoreDeprecations": "5.0",
     "allowJs": true,
     "baseUrl": ".",
     "paths": {
@@ -24,6 +25,8 @@
     "lib": ["es2017", "dom"],
     "composite": true,
     "types": ["node"],
+    "typeRoots": ["./node_modules/@types", "./typings"],
+    "verbatimModuleSyntax": true,
     "esModuleInterop": true,
     "allowSyntheticDefaultImports": true
   },
