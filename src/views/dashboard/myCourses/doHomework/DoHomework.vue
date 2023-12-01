@@ -6,22 +6,24 @@
         <a-col :span="18" :xxl="18" :xl="18" :lg="18" :md="24" :sm="24" :xs="24">
           <a-tabs v-model:activeKey="activeKey">
             <a-tab-pane key="1" tab="Đề bài">
-              <a-collapse v-model:activeKey="activeKeyCollapse">
-                <a-collapse-panel key="1" header="Đề bài">
-                  <p>{{ homework.content }}</p>
-                </a-collapse-panel>
-                <a-collapse-panel key="2" header="Mô tả">
-                  <a-card
-                    v-for="item in homework.file"
-                    :key="item.id"
-                    class="card-item"
-                    style="margin-top: 10px; background-color: rgba(225, 225, 225, 0.2)"
-                  >
-                    <h4>{{ item.fileName }}</h4>
-                    <p>{{ item.hint }}</p>
-                  </a-card>
-                </a-collapse-panel>
-              </a-collapse>
+              <div class="collapse-do-homework">
+                <a-collapse v-model:activeKey="activeKeyCollapse">
+                  <a-collapse-panel key="1" header="Đề bài">
+                    <p>{{ homework.content }}</p>
+                  </a-collapse-panel>
+                  <a-collapse-panel key="2" header="Mô tả">
+                    <a-card
+                      v-for="item in homework.file"
+                      :key="item.id"
+                      class="card-item"
+                      style="margin-top: 10px; background-color: rgba(225, 225, 225, 0.2)"
+                    >
+                      <h4>{{ item.fileName }}</h4>
+                      <p>{{ item.hint }}</p>
+                    </a-card>
+                  </a-collapse-panel>
+                </a-collapse>
+              </div>
               <div style="margin-top: 20px">
                 <a-tabs v-model:activeKey="activeKeyCollapseEditor">
                   <a-tab-pane v-for="item in homework.file" :key="item.id" :tab="item.fileName">
@@ -241,5 +243,18 @@ const onFinishFailed = (errorInfo: any) => {
 .card-item {
   border-radius: 10px;
   border-width: 2px;
+}
+</style>
+
+<style>
+.collapse-do-homework .ant-collapse-header {
+  background-color: #21498c !important;
+  color: white !important;
+  font-weight: 600;
+  border-radius: 5px !important;
+}
+
+.collapse-do-homework .ant-collapse-content-active {
+  background-color: white !important;
 }
 </style>

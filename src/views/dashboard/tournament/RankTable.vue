@@ -1,52 +1,45 @@
 <template>
   <div>
     <sdPageHeader :title="'Bảng xếp hạng'" class="ninjadash-page-header-main"></sdPageHeader>
-    <Main>
-      <a-row :gutter="[16, 10]">
-        <a-col :span="8" :xxl="8" :xl="8" :lg="8" :md="24" :sm="24" :xs="24">
-          <div class="input-filter">
-            <a-input v-model:value="searchKeyword" placeholder="Tìm kiếm" @change="handleSearch" />
-            <div class="icon-search">
-              <unicon name="search"></unicon>
-            </div>
-          </div>
-        </a-col>
-        <a-col :span="8" :xxl="8" :xl="8" :lg="8" :md="24" :sm="24" :xs="24">
-          <div class="input-filter">
-            <a-select
-              v-model:value="searchKhoaHoc"
-              mode="multiple"
-              style="width: 100%"
-              placeholder="Chọn các ngôn ngữ"
-              :options="uniqueKhoaHoc.map((c) => ({ value: c, label: c }))"
-              @change="handleSearch"
-            />
-          </div>
-        </a-col>
-        <a-col :span="8" :xxl="8" :xl="8" :lg="8" :md="24" :sm="24" :xs="24">
-          <div class="input-filter">
-            <a-select
-              v-model:value="searchDanhHieu"
-              mode="multiple"
-              style="width: 100%"
-              placeholder="Chọn các ngôn ngữ"
-              :options="uniqueDanhHieu.map((c) => ({ value: c, label: c }))"
-              @change="handleSearch"
-            />
+    <Main style="position: relative">
+      <a-row>
+        <a-col :span="20" :xxl="20" :xl="19" :lg="18" :md="17" :sm="16" :xs="12"></a-col>
+        <a-col :span="4" :xxl="4" :xl="5" :lg="6" :md="7" :sm="8" :xs="12">
+          <div class="collapse-ranktable">
+            <div class="collapse-ranktable-icon"><unicon name="align-center-alt"></unicon></div>
+            <a-collapse v-model:activeKey="activeKey">
+              <a-collapse-panel key="1" header="Bộ lọc">
+                <a-row :gutter="[16, 10]">
+                  <a-col :span="24">
+                    <a-select
+                      style="width: 100%"
+                      v-model:value="searchDanhHieu"
+                      :options="uniqueDanhHieu.map((c) => ({ value: c, label: c }))"
+                      @change="handleSearch"
+                    ></a-select>
+                  </a-col>
+                  <a-col :span="24">
+                    <a-select
+                      style="width: 100%"
+                      v-model:value="searchKhoaHoc"
+                      :options="uniqueKhoaHoc.map((c) => ({ value: c, label: c }))"
+                      @change="handleSearch"
+                    ></a-select>
+                  </a-col>
+                  <a-col :span="24">
+                    <a-select
+                      style="width: 100%"
+                      v-model:value="sortSelect"
+                      :options="sortOption"
+                      @change="handleSearch"
+                    ></a-select>
+                  </a-col>
+                </a-row>
+              </a-collapse-panel>
+            </a-collapse>
           </div>
         </a-col>
       </a-row>
-      <!-- <div style="position: relative; background-color: #ecf0f3; border-radius: 25px; min-width: 8%">
-          <sdButton
-            size="default"
-            shape="circle"
-            type="primary"
-            style="width: 100%; display: flex; justify-content: space-between; align-items: center"
-          >
-            <span>Bộ lọc</span>
-            <unicon name="align-justify"></unicon>
-          </sdButton>
-        </div> -->
       <a-table :dataSource="dataShow" :pagination="pagination" :columns="columns" class="table-data">
         <template #bodyCell="{ column, text }">
           <template v-if="column.dataIndex === 'key'">
@@ -75,6 +68,8 @@ import { ref } from 'vue';
 import Mock from 'mockjs';
 
 const searchKeyword = ref('');
+
+const activeKey = ref([]);
 
 const pageIndex = ref(1);
 
@@ -134,16 +129,11 @@ const dataSource = generateFakeData(999)
   }));
 
 const dataShow = ref(dataSource);
-const uniqueKhoaHoc = Array.from(new Set(Object.values(dataSource).map((c) => c.courses)));
-const uniqueDanhHieu = Array.from(new Set(Object.values(dataSource).map((c) => c.appellation)));
-const searchKhoaHoc = ref(uniqueKhoaHoc);
-const searchDanhHieu = ref(uniqueDanhHieu);
-
-const handleSearch = () => {
-  dataShow.value = dataSource.filter((c) => c.name.includes(searchKeyword.value));
-  dataShow.value = dataShow.value.filter((c) => searchKhoaHoc.value.includes(c.courses));
-  dataShow.value = dataShow.value.filter((c) => searchDanhHieu.value.includes(c.appellation));
-};
+const uniqueKhoaHoc = ['all', ...Array.from(new Set(Object.values(dataSource).map((c) => c.courses)))];
+const uniqueDanhHieu = ['all', ...Array.from(new Set(Object.values(dataSource).map((c) => c.appellation)))];
+const searchKhoaHoc = ref(uniqueKhoaHoc[0]);
+const searchDanhHieu = ref(uniqueDanhHieu[0]);
+const sortSelect = ref('elloCoding-asc');
 
 const pagination = ref({
   total: dataSource.length,
@@ -154,22 +144,77 @@ const pagination = ref({
 const generateArrayOfStrings = () => {
   var result = [];
   const pagination_total =
-    dataSource.length % pagination.value.pageSize === 0
-      ? dataSource.length / pagination.value.pageSize
-      : Math.floor(dataSource.length / pagination.value.pageSize) + 1;
+    dataShow.value.length % pagination.value.pageSize === 0
+      ? dataShow.value.length / pagination.value.pageSize
+      : Math.floor(dataShow.value.length / pagination.value.pageSize) + 1;
   for (let index = 1; index <= pagination_total; index++) {
     result.push({
       value: index,
       label: `Hiển thị ${(index - 1) * pagination.value.pageSize + 1} - ${Math.min(
         index * pagination.value.pageSize,
-        dataSource.length,
-      )} of ${dataSource.length}`,
+        dataShow.value.length,
+      )} of ${dataShow.value.length}`,
     });
   }
   return result;
 };
 
-const pageOption = generateArrayOfStrings();
+const pageOption = ref(generateArrayOfStrings());
+
+interface MyObject {
+  key: number;
+  name: any;
+  elloCoding: any;
+  courses: any;
+  appellation: any;
+  contestEntered: any;
+}
+
+const handleSearch = () => {
+  dataShow.value = dataSource.filter((c) => c.name.includes(searchKeyword.value));
+  if (searchKhoaHoc.value !== 'all') {
+    dataShow.value = dataShow.value.filter((c) => searchKhoaHoc.value === c.courses);
+  }
+  if (searchDanhHieu.value !== 'all') {
+    dataShow.value = dataShow.value.filter((c) => searchDanhHieu.value === c.appellation);
+  }
+
+  const property = sortSelect.value.split('-')[0].trim() as keyof MyObject;
+  const direction = sortSelect.value.split('-')[1].trim();
+
+  dataShow.value = dataShow.value.sort((a, b) => {
+    const valueA = a[property];
+    const valueB = b[property];
+
+    if (valueA instanceof Date && valueB instanceof Date) {
+      if (direction === 'desc') {
+        return valueB.getTime() - valueA.getTime();
+      } else if (direction === 'asc') {
+        return valueA.getTime() - valueB.getTime();
+      }
+    }
+
+    if (typeof valueA === 'number' && typeof valueB === 'number') {
+      return direction === 'desc' ? valueB - valueA : valueA - valueB;
+    }
+
+    const stringValueA = String(valueA);
+    const stringValueB = String(valueB);
+
+    if (direction === 'desc') {
+      return stringValueB.localeCompare(stringValueA);
+    } else if (direction === 'asc') {
+      return stringValueA.localeCompare(stringValueB);
+    }
+
+    return 0;
+  });
+
+  pagination.value.total = dataShow.value.length;
+  pagination.value.current = 1;
+  pageOption.value = generateArrayOfStrings();
+  pageIndex.value = 1;
+};
 
 const columns = [
   {
@@ -203,6 +248,18 @@ const columns = [
     key: 'contestEntered',
   },
 ];
+
+const dataIndexSkip = ['key', 'courses', 'appellation'];
+const sortOption = columns.flatMap((c) => {
+  if (!dataIndexSkip.includes(c.dataIndex)) {
+    return [
+      { value: `${c.dataIndex}-desc`, label: `${c.title} giảm dần` },
+      { value: `${c.dataIndex}-asc`, label: `${c.title} tăng dần` },
+    ];
+  } else {
+    return [];
+  }
+});
 </script>
 <style scoped>
 .ant-input:focus {
@@ -236,7 +293,7 @@ const columns = [
 }
 
 .table-data {
-  margin-top: 20px;
+  margin-top: 60px;
   border-radius: 20px;
 }
 
@@ -245,5 +302,47 @@ const columns = [
   background-color: #ecf0f3;
   border-radius: 25px;
   min-width: 20%;
+}
+.collapse-ranktable {
+  width: 100%;
+  position: absolute;
+  z-index: 10;
+}
+
+.collapse-ranktable-icon {
+  position: absolute;
+  right: 10px;
+  z-index: 9999;
+  top: 25px;
+  transform: translate(0, -50%);
+}
+
+.collapse-ranktable-icon .unicon {
+  display: block;
+}
+</style>
+
+<style>
+.collapse-ranktable .ant-collapse {
+  border-width: 2px;
+}
+
+.collapse-ranktable .ant-collapse {
+  border-width: 2px;
+}
+
+.collapse-ranktable .ant-collapse-header {
+  background-color: white !important;
+  color: black !important;
+  font-weight: 600;
+  border-radius: 5px !important;
+}
+
+.collapse-ranktable .ant-collapse-header .ant-collapse-arrow {
+  display: none !important;
+}
+
+.collapse-ranktable .ant-collapse-content-active {
+  background-color: white !important;
 }
 </style>

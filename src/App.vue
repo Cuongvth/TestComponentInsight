@@ -96,17 +96,6 @@ onMounted(() => {
   color: black !important;
 }
 
-.ant-collapse-header {
-  background-color: #21498c !important;
-  color: white !important;
-  font-weight: 600;
-  border-radius: 5px !important;
-}
-
-.ant-collapse-content-active {
-  background-color: white !important;
-}
-
 .ant-table-thead > tr > th {
   background: #eb763c !important;
 }
