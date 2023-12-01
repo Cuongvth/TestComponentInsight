@@ -27,7 +27,7 @@ export default [
       {
         path: 'khoahoc',
         name: 'myCourses',
-        component: () => import('@/views/dashboard/myCourses/scourses/MyCourses.vue'),
+        component: () => import('@/views/dashboard/myCourses/courses/MyCourses.vue'),
       },
       {
         path: 'khoahoc/:id',
