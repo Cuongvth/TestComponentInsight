@@ -9,47 +9,35 @@
             <div class="collapse-ranktable-icon"><unicon name="align-center-alt"></unicon></div>
             <a-collapse v-model:activeKey="activeKey">
               <a-collapse-panel key="1" header="Bộ lọc">
-                <a-row :gutter="[16, 10]">
-                  <a-col :span="24">
-                    <h4>Danh hiệu</h4>
-                    <a-select
-                      style="width: 100%"
-                      v-model:value="searchDanhHieu"
-                      :options="uniqueDanhHieu.map((c) => ({ value: c, label: c }))"
-                      @change="handleSearch"
-                    ></a-select>
-                  </a-col>
-                  <a-col :span="24">
-                    <h4>Khóa học</h4>
-                    <a-select
-                      style="width: 100%"
-                      v-model:value="searchKhoaHoc"
-                      :options="uniqueKhoaHoc.map((c) => ({ value: c, label: c }))"
-                      @change="handleSearch"
-                    ></a-select>
-                  </a-col>
-                  <a-col :span="24">
-                    <h4>Sắp xếp theo</h4>
-                    <a-select
-                      style="width: 100%"
-                      v-model:value="sortSelect"
-                      :options="sortOption"
-                      @change="handleSearch"
-                    ></a-select>
-                  </a-col>
-                  <a-col :span="24">
-                    <h4>Thứ tự sắp xếp</h4>
-                    <a-select
-                      style="width: 100%"
-                      v-model:value="directionSelect"
-                      :options="[
-                        { value: 'asc', label: 'Tăng dần' },
-                        { value: 'desc', label: 'Giảm dần' },
-                      ]"
-                      @change="handleSearch"
-                    ></a-select>
-                  </a-col>
-                </a-row>
+                <h4>Lọc dữ liệu</h4>
+                <a-select
+                  style="width: 100%"
+                  v-model:value="searchDanhHieu"
+                  :options="uniqueDanhHieu.map((c) => ({ value: c, label: c }))"
+                  @change="handleSearch"
+                ></a-select>
+                <a-select
+                  style="width: 100%"
+                  v-model:value="searchKhoaHoc"
+                  :options="uniqueKhoaHoc.map((c) => ({ value: c, label: c }))"
+                  @change="handleSearch"
+                ></a-select>
+                <h4>Sắp xếp</h4>
+                <a-select
+                  style="width: 100%"
+                  v-model:value="sortSelect"
+                  :options="sortOption"
+                  @change="handleSearch"
+                ></a-select>
+                <a-select
+                  style="width: 100%"
+                  v-model:value="directionSelect"
+                  :options="[
+                    { value: 'asc', label: 'Tăng dần' },
+                    { value: 'desc', label: 'Giảm dần' },
+                  ]"
+                  @change="handleSearch"
+                ></a-select>
               </a-collapse-panel>
             </a-collapse>
           </div>
