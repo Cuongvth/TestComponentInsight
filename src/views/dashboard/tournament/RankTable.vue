@@ -11,6 +11,7 @@
               <a-collapse-panel key="1" header="Bộ lọc">
                 <a-row :gutter="[16, 10]">
                   <a-col :span="24">
+                    <h4>Danh hiệu</h4>
                     <a-select
                       style="width: 100%"
                       v-model:value="searchDanhHieu"
@@ -19,6 +20,7 @@
                     ></a-select>
                   </a-col>
                   <a-col :span="24">
+                    <h4>Khóa học</h4>
                     <a-select
                       style="width: 100%"
                       v-model:value="searchKhoaHoc"
@@ -27,10 +29,23 @@
                     ></a-select>
                   </a-col>
                   <a-col :span="24">
+                    <h4>Sắp xếp theo</h4>
                     <a-select
                       style="width: 100%"
                       v-model:value="sortSelect"
                       :options="sortOption"
+                      @change="handleSearch"
+                    ></a-select>
+                  </a-col>
+                  <a-col :span="24">
+                    <h4>Thứ tự sắp xếp</h4>
+                    <a-select
+                      style="width: 100%"
+                      v-model:value="directionSelect"
+                      :options="[
+                        { value: 'asc', label: 'Tăng dần' },
+                        { value: 'desc', label: 'Giảm dần' },
+                      ]"
                       @change="handleSearch"
                     ></a-select>
                   </a-col>
@@ -133,7 +148,8 @@ const uniqueKhoaHoc = ['all', ...Array.from(new Set(Object.values(dataSource).ma
 const uniqueDanhHieu = ['all', ...Array.from(new Set(Object.values(dataSource).map((c) => c.appellation)))];
 const searchKhoaHoc = ref(uniqueKhoaHoc[0]);
 const searchDanhHieu = ref(uniqueDanhHieu[0]);
-const sortSelect = ref('elloCoding-asc');
+const sortSelect = ref('elloCoding');
+const directionSelect = ref('asc');
 
 const pagination = ref({
   total: dataSource.length,
@@ -179,8 +195,8 @@ const handleSearch = () => {
     dataShow.value = dataShow.value.filter((c) => searchDanhHieu.value === c.appellation);
   }
 
-  const property = sortSelect.value.split('-')[0].trim() as keyof MyObject;
-  const direction = sortSelect.value.split('-')[1].trim();
+  const property = sortSelect.value as keyof MyObject;
+  const direction = directionSelect.value;
 
   dataShow.value = dataShow.value.sort((a, b) => {
     const valueA = a[property];
@@ -253,10 +269,7 @@ const columns = [
 const dataIndexSkip = ['key', 'courses', 'appellation'];
 const sortOption = columns.flatMap((c) => {
   if (!dataIndexSkip.includes(c.dataIndex)) {
-    return [
-      { value: `${c.dataIndex}-desc`, label: `${c.title} giảm dần` },
-      { value: `${c.dataIndex}-asc`, label: `${c.title} tăng dần` },
-    ];
+    return [{ value: c.dataIndex, label: c.title }];
   } else {
     return [];
   }
