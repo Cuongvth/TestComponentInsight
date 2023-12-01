@@ -131,7 +131,23 @@ onMounted(() => {
   display: none !important;
 }
 
-.unicon svg {
+.input-filter .unicon svg {
   fill: #eb763c !important;
+}
+
+.input-filter .ant-select-selector {
+  height: 50px;
+  border-radius: 25px !important;
+  background-color: #ecf0f3 !important;
+  padding: 1px 15px !important;
+}
+
+.input-filter .ant-select-selection-item {
+  background-color: #eb763c !important;
+  border-radius: 5px !important;
+}
+
+.input-filter .ant-select-selection-item-content {
+  font-weight: 600;
 }
 </style>

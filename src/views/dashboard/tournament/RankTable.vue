@@ -2,14 +2,41 @@
   <div>
     <sdPageHeader :title="'Bảng xếp hạng'" class="ninjadash-page-header-main"></sdPageHeader>
     <Main>
-      <div style="display: flex; justify-content: space-between; align-items: center">
-        <div style="position: relative; background-color: #ecf0f3; border-radius: 25px; min-width: 20%">
-          <a-input v-model:value="searchKeyword" placeholder="Tìm kiếm" />
-          <div class="icon-search">
-            <unicon name="search"></unicon>
+      <a-row :gutter="[16, 10]">
+        <a-col :span="8" :xxl="8" :xl="8" :lg="8" :md="24" :sm="24" :xs="24">
+          <div class="input-filter">
+            <a-input v-model:value="searchKeyword" placeholder="Tìm kiếm" @change="handleSearch" />
+            <div class="icon-search">
+              <unicon name="search"></unicon>
+            </div>
           </div>
-        </div>
-        <div style="position: relative; background-color: #ecf0f3; border-radius: 25px; min-width: 8%">
+        </a-col>
+        <a-col :span="8" :xxl="8" :xl="8" :lg="8" :md="24" :sm="24" :xs="24">
+          <div class="input-filter">
+            <a-select
+              v-model:value="searchKhoaHoc"
+              mode="multiple"
+              style="width: 100%"
+              placeholder="Chọn các ngôn ngữ"
+              :options="uniqueKhoaHoc.map((c) => ({ value: c, label: c }))"
+              @change="handleSearch"
+            />
+          </div>
+        </a-col>
+        <a-col :span="8" :xxl="8" :xl="8" :lg="8" :md="24" :sm="24" :xs="24">
+          <div class="input-filter">
+            <a-select
+              v-model:value="searchDanhHieu"
+              mode="multiple"
+              style="width: 100%"
+              placeholder="Chọn các ngôn ngữ"
+              :options="uniqueDanhHieu.map((c) => ({ value: c, label: c }))"
+              @change="handleSearch"
+            />
+          </div>
+        </a-col>
+      </a-row>
+      <!-- <div style="position: relative; background-color: #ecf0f3; border-radius: 25px; min-width: 8%">
           <sdButton
             size="default"
             shape="circle"
@@ -19,9 +46,8 @@
             <span>Bộ lọc</span>
             <unicon name="align-justify"></unicon>
           </sdButton>
-        </div>
-      </div>
-      <a-table :dataSource="dataSource" :pagination="pagination" :columns="columns" class="table-data">
+        </div> -->
+      <a-table :dataSource="dataShow" :pagination="pagination" :columns="columns" class="table-data">
         <template #bodyCell="{ column, text }">
           <template v-if="column.dataIndex === 'key'">
             <img v-if="getRankingStyle(text).icon" :src="getRankingStyle(text).icon" style="width: 30px" />
@@ -107,6 +133,18 @@ const dataSource = generateFakeData(999)
     contestEntered: c.contestEntered,
   }));
 
+const dataShow = ref(dataSource);
+const uniqueKhoaHoc = Array.from(new Set(Object.values(dataSource).map((c) => c.courses)));
+const uniqueDanhHieu = Array.from(new Set(Object.values(dataSource).map((c) => c.appellation)));
+const searchKhoaHoc = ref(uniqueKhoaHoc);
+const searchDanhHieu = ref(uniqueDanhHieu);
+
+const handleSearch = () => {
+  dataShow.value = dataSource.filter((c) => c.name.includes(searchKeyword.value));
+  dataShow.value = dataShow.value.filter((c) => searchKhoaHoc.value.includes(c.courses));
+  dataShow.value = dataShow.value.filter((c) => searchDanhHieu.value.includes(c.appellation));
+};
+
 const pagination = ref({
   total: dataSource.length,
   current: 1,
@@ -171,7 +209,13 @@ const columns = [
   border: none !important;
 }
 
-.ant-input {
+.input-filter .ant-input {
+  height: 50px;
+  border-radius: 25px;
+  background-color: #ecf0f3;
+}
+
+.input-filter .ant-select {
   height: 50px;
   border-radius: 25px;
   background-color: #ecf0f3;
@@ -194,5 +238,12 @@ const columns = [
 .table-data {
   margin-top: 20px;
   border-radius: 20px;
+}
+
+.input-filter {
+  position: relative;
+  background-color: #ecf0f3;
+  border-radius: 25px;
+  min-width: 20%;
 }
 </style>
