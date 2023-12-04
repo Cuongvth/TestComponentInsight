@@ -142,4 +142,9 @@ export default [
     name: 'bangxephang',
     component: () => import('@/views/dashboard/tournament/RankTable.vue'),
   },
+  {
+    path: '/danhsachnguoichoi',
+    name: 'danhsachnguoichoi',
+    component: () => import('@/views/dashboard/tournament/ListofPlayers.vue'),
+  },
 ];

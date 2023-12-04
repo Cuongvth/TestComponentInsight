@@ -118,12 +118,6 @@ const pagination = ref({
 });
 </script>
 
-<style scoped>
-.fiLpOL.fiLpOL {
-  background: none !important;
-}
-</style>
-
 <style>
 .table-data .ant-table-thead > tr > th {
   background: #eb763c !important;
