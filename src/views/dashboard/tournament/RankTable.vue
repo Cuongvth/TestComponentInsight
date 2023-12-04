@@ -1,7 +1,7 @@
 <template>
   <div style="height: calc(100vh - 125px)">
-    <div style="max-height: calc(100% - 65px); overflow-y: scroll; margin-bottom: 20px">
-      <sdPageHeader :title="'Bảng xếp hạng'" class="ninjadash-page-header-main"></sdPageHeader>
+    <sdPageHeader :title="'Bảng xếp hạng'" class="ninjadash-page-header-main"></sdPageHeader>
+    <div style="max-height: calc(100% - 155px); overflow-y: scroll; margin-bottom: 20px">
       <Main>
         <sdButton style="float: right; margin-bottom: 10px">
           <span>Bộ lọc</span><span> </span>
