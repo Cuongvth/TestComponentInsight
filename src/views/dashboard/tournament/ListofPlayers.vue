@@ -4,9 +4,9 @@
       <sdButton @click="showModal(true)" size="sm" type="primary">Admin</sdButton>
       <sdButton @click="showModal(false)" size="sm" type="primary">User</sdButton>
       <sdModal :visible="open" title="Basic Modal" width="1500px" :onCancel="handleCancel">
-        <div style="max-height: calc(100vh - 250px); overflow-y: scroll; padding: 0 20px">
+        <div style="max-height: calc(100vh - 210px); overflow-y: scroll; padding: 0 20px">
           <sdButton style="float: right; margin-bottom: 10px" @click="showAll = !showAll">
-            <span>{{ showAll ? 'Hiển thị tất cả' : 'Hiển thị top 10' }}</span
+            <span>{{ showAll ? 'Ẩn bớt' : 'Hiển thị tất cả' }}</span
             ><span> </span>
             <unicon name="align-center-alt"></unicon>
           </sdButton>
@@ -14,7 +14,7 @@
             class="table-responsive table-data"
             :pagination="false"
             :columns="columns"
-            :data-source="showAll ? data : data.slice(0, 10)"
+            :data-source="showAll ? data : data.slice(0, lengthShow)"
           >
             <template #bodyCell="{ column, text }">
               <template v-if="column.dataIndex === 'key'">
@@ -43,26 +43,30 @@
               </template>
               <template v-else-if="column.dataIndex === 'thaoTac'">
                 <div style="display: flex; justify-content: space-around; align-items: center; width: 100%">
-                  <sdButton
-                    style="float: right; margin-bottom: 10px"
-                    size="default"
-                    shape="circle"
-                    type="primary"
-                    @click="showItem(text)"
-                  >
-                    <span>Xem lại</span><span> </span>
-                    <unicon name="align-center-alt"></unicon>
-                  </sdButton>
-                  <sdButton
-                    style="float: right; margin-bottom: 10px"
-                    size="default"
-                    shape="circle"
-                    type="primary"
-                    @click="deleteItem(text)"
-                  >
-                    <span>Xóa</span><span> </span>
-                    <unicon name="align-center-alt"></unicon>
-                  </sdButton>
+                  <div class="show-item">
+                    <sdButton
+                      style="float: right; margin-bottom: 10px"
+                      size="default"
+                      shape="circle"
+                      type="primary"
+                      @click="showItem(text)"
+                    >
+                      <span>Xem lại</span><span> </span>
+                      <unicon name="align-center-alt"></unicon>
+                    </sdButton>
+                  </div>
+                  <div class="delete-item">
+                    <sdButton
+                      style="float: right; margin-bottom: 10px"
+                      size="default"
+                      shape="circle"
+                      type="primary"
+                      @click="deleteItem(text)"
+                    >
+                      <span>Xóa</span><span> </span>
+                      <unicon name="align-center-alt"></unicon>
+                    </sdButton>
+                  </div>
                 </div>
               </template>
               <template v-else-if="column.dataIndex === 'ngayDangKi'">
@@ -85,6 +89,28 @@ import 'dayjs/locale/en';
 
 const open = ref(false);
 const showAll = ref(false);
+const lengthShow = ref(7);
+
+const resizeWindow = () => {
+  var newHeight = window.innerHeight;
+  if (newHeight > 420 && newHeight <= 525) {
+    lengthShow.value = 1;
+  } else if (newHeight > 525 && newHeight <= 630) {
+    lengthShow.value = 2;
+  } else if (newHeight > 630 && newHeight <= 735) {
+    lengthShow.value = 3;
+  } else if (newHeight > 735 && newHeight <= 840) {
+    lengthShow.value = 4;
+  } else if (newHeight > 840 && newHeight <= 945) {
+    lengthShow.value = 5;
+  } else if (newHeight > 945) {
+    lengthShow.value = 10;
+  }
+};
+
+resizeWindow();
+
+window.addEventListener('resize', resizeWindow);
 
 const showModal = (event: any) => {
   open.value = true;
@@ -192,53 +218,11 @@ const data = ref(generateFakeData(50));
 </script>
 
 <style scoped>
-.fiLpOL.fiLpOL {
-  background: #eb763c !important;
-}
-</style>
-
-<style>
-.table-data .ant-table-thead > tr > th {
-  background: #eb763c !important;
+.show-item .fiLpOL.fiLpOL {
+  background: #3895ff !important;
 }
 
-.table-data .ant-table-thead > tr > th {
-  border-right: #f0f0f0 solid 1px !important;
-}
-
-.ant-table-filter-column,
-.ant-table-column-sorters {
-  justify-content: center;
-  gap: 2px;
-}
-
-.table-data .ant-table-column-title {
-  flex: 0;
-}
-
-.table-data .ant-table-thead > tr:first-child > th:first-child {
-  border-top-left-radius: 8px !important;
-}
-
-.table-data .ant-table-thead > tr:last-child > th:last-child {
-  border-top-right-radius: 8px !important;
-  border-right: none;
-}
-
-.table-data .ant-table-tbody > tr:last-child > td:first-child {
-  border-bottom-left-radius: 8px !important;
-}
-
-.table-data .ant-table-tbody > tr:last-child > td:last-child {
-  border-bottom-right-radius: 8px !important;
-}
-
-.table-data .ant-table-cell {
-  font-weight: 500 !important;
-  text-align: center;
-}
-
-.table-data .ant-table-pagination {
-  display: none !important;
+.delete-item .fiLpOL.fiLpOL {
+  background: #ff4d4f !important;
 }
 </style>
