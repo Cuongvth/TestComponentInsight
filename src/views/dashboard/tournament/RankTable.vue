@@ -120,7 +120,7 @@ const generateFakeData = (count: number) => {
   return dataSource;
 };
 
-const dataSource = generateFakeData(999)
+const dataSource = generateFakeData(1000)
   .sort((a, b) => b.elloCoding - a.elloCoding)
   .map((c, index) => ({
     key: index + 1,
