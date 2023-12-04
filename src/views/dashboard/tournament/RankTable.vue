@@ -3,6 +3,10 @@
     <div style="height: 100%; overflow-y: scroll">
       <sdPageHeader :title="'Bảng xếp hạng'" class="ninjadash-page-header-main"></sdPageHeader>
       <Main>
+        <sdButton style="float: right; margin-bottom: 10px">
+          <span>Bộ lọc</span><span> </span>
+          <unicon name="align-center-alt"></unicon>
+        </sdButton>
         <a-table class="table-responsive table-data" :columns="columns" :data-source="data">
           <template #bodyCell="{ column, text }">
             <template v-if="column.dataIndex === 'key'">
@@ -98,6 +102,12 @@ const columns = [
 ];
 const data = generateFakeData(1000);
 </script>
+
+<style scoped>
+.fiLpOL.fiLpOL {
+  background: none !important;
+}
+</style>
 
 <style>
 .table-data .ant-table-thead > tr > th {
