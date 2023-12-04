@@ -93,6 +93,8 @@ const lengthShow = ref(7);
 
 const resizeWindow = () => {
   var newHeight = window.innerHeight;
+  console.log(newHeight);
+
   if (newHeight > 420 && newHeight <= 525) {
     lengthShow.value = 1;
   } else if (newHeight > 525 && newHeight <= 630) {
