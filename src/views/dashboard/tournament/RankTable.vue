@@ -1,13 +1,13 @@
 <template>
-  <div style="height: calc(100vh - 130px)">
-    <div style="height: 100%; overflow-y: scroll">
+  <div style="height: calc(100vh - 125px)">
+    <div style="max-height: calc(100% - 65px); overflow-y: scroll; margin-bottom: 20px">
       <sdPageHeader :title="'Bảng xếp hạng'" class="ninjadash-page-header-main"></sdPageHeader>
       <Main>
         <sdButton style="float: right; margin-bottom: 10px">
           <span>Bộ lọc</span><span> </span>
           <unicon name="align-center-alt"></unicon>
         </sdButton>
-        <a-table class="table-responsive table-data" :columns="columns" :data-source="data">
+        <a-table class="table-responsive table-data" :pagination="pagination" :columns="columns" :data-source="data">
           <template #bodyCell="{ column, text }">
             <template v-if="column.dataIndex === 'key'">
               <img v-if="getRankingStyle(text).icon" :src="getRankingStyle(text).icon" style="width: 30px" />
@@ -17,12 +17,21 @@
         </a-table>
       </Main>
     </div>
+    <div style="float: right; margin-right: 45px">
+      <a-pagination
+        v-model:current="pagination.current"
+        v-model:pageSize="pagination.pageSize"
+        :total="pagination.total"
+        show-less-items
+      />
+    </div>
   </div>
 </template>
 
 <script setup lang="ts">
 import { Main } from '../../styled';
 import Mock from 'mockjs';
+import { ref } from 'vue';
 
 const getRankingStyle = (order: any) => {
   let color, icon;
@@ -101,6 +110,12 @@ const columns = [
   },
 ];
 const data = generateFakeData(1000);
+
+const pagination = ref({
+  total: data.length,
+  current: 1,
+  pageSize: 25,
+});
 </script>
 
 <style scoped>
@@ -114,12 +129,27 @@ const data = generateFakeData(1000);
   background: #eb763c !important;
 }
 
+.table-data .ant-table-thead > tr > th {
+  border-right: #f0f0f0 solid 1px !important;
+}
+
+.ant-table-filter-column,
+.ant-table-column-sorters {
+  justify-content: center;
+  gap: 2px;
+}
+
+.table-data .ant-table-column-title {
+  flex: 0;
+}
+
 .table-data .ant-table-thead > tr:first-child > th:first-child {
   border-top-left-radius: 8px !important;
 }
 
 .table-data .ant-table-thead > tr:last-child > th:last-child {
   border-top-right-radius: 8px !important;
+  border-right: none;
 }
 
 .table-data .ant-table-tbody > tr:last-child > td:first-child {
@@ -133,5 +163,9 @@ const data = generateFakeData(1000);
 .table-data .ant-table-cell {
   font-weight: 500 !important;
   text-align: center;
+}
+
+.table-data .ant-table-pagination {
+  display: none !important;
 }
 </style>
