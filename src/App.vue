@@ -142,6 +142,6 @@ onMounted(() => {
 }
 
 .ant-modal-body {
-  padding: 10px 20px !important;
+  padding: 15px 20px !important;
 }
 </style>

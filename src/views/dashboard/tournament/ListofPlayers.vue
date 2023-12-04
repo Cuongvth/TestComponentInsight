@@ -3,13 +3,16 @@
     <Main>
       <sdButton @click="showModal(true)" size="sm" type="primary">Admin</sdButton>
       <sdButton @click="showModal(false)" size="sm" type="primary">User</sdButton>
-      <sdModal :visible="open" title="Basic Modal" width="1500px" :onCancel="handleCancel">
-        <div style="max-height: calc(100vh - 210px); overflow-y: scroll; padding: 0 20px">
-          <sdButton style="float: right; margin-bottom: 10px" @click="showAll = !showAll">
-            <span>{{ showAll ? 'Ẩn bớt' : 'Hiển thị tất cả' }}</span
-            ><span> </span>
-            <unicon name="align-center-alt"></unicon>
-          </sdButton>
+      <sdModal :visible="open" width="1500px" :onCancel="handleCancel">
+        <div style="max-height: calc(100vh - 200px); overflow-y: scroll; padding: 0 20px">
+          <div style="display: flex; justify-content: space-between; align-items: center">
+            <h3>Danh sách người tham gia</h3>
+            <sdButton style="margin-bottom: 10px" @click="showAll = !showAll">
+              <span>{{ showAll ? 'Ẩn bớt' : 'Hiển thị tất cả' }}</span
+              ><span> </span>
+              <unicon name="align-center-alt"></unicon>
+            </sdButton>
+          </div>
           <a-table
             class="table-responsive table-data"
             :pagination="false"
@@ -226,5 +229,11 @@ const data = ref(generateFakeData(50));
 
 .delete-item .fiLpOL.fiLpOL {
   background: #ff4d4f !important;
+}
+</style>
+
+<style>
+.ant-modal-close {
+  display: none !important;
 }
 </style>
