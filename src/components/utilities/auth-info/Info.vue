@@ -3,11 +3,11 @@ import { InfoWraper, NavAuth, UserDropDown } from './auth-info-style';
 // import Support from "./Support";
 import Settings from './Settings.vue';
 import Notification from './Notification.vue';
-import Message from './Message.vue';
+import Message from '@/layoutdemo/Message.vue';
 import { useStore } from 'vuex';
 import { useRouter } from 'vue-router';
 import { LogoutOutlined } from '@ant-design/icons-vue';
-import SearchBar from './Search.vue';
+import SearchBar from '@/layoutdemo/Search.vue';
 
 const flag: any = 'english';
 const { dispatch } = useStore();
