@@ -71,12 +71,12 @@
           <template #bodyCell="{ column, text }">
             <template v-if="column.dataIndex === 'hocVien'">
               <a-row :gutter="[16, 10]">
-                <a-col :span="5" :xxl="5" :xl="5" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-col :span="4" :xxl="4" :xl="4" :lg="24" :md="24" :sm="24" :xs="24">
                   <div style="display: flex; justify-content: center; align-items: center; height: 100%">
                     <img style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover" :src="text.avatar" />
                   </div>
                 </a-col>
-                <a-col :span="5" :xxl="5" :xl="5" :lg="24" :md="24" :sm="24" :xs="24">
+                <a-col :span="20" :xxl="20" :xl="20" :lg="24" :md="24" :sm="24" :xs="24">
                   <div>
                     <p style="margin: 0">
                       {{ text.name }}
@@ -145,6 +145,7 @@ const generateFakeData = (count: number) => {
       title: '@pick(["Chiến thần", "Kỳ phùng địch thủ", "Độc cô cầu bại", "Thách đấu"])',
       elo: '@integer(10000, 99999)',
       trangThai: '@integer(0, 1)',
+      isMe: '@integer(0, 1)',
     });
 
     dataSource.push(fakeData);
