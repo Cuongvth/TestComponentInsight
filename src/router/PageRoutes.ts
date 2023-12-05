@@ -147,4 +147,9 @@ export default [
     name: 'danhsachnguoichoi',
     component: () => import('@/views/dashboard/tournament/ListofPlayers.vue'),
   },
+  {
+    path: '/phongcho',
+    name: 'phongcho',
+    component: () => import('@/views/dashboard/tournament/WaitingRoom.vue'),
+  },
 ];

@@ -14,7 +14,7 @@
             </sdButton>
           </div>
           <a-table
-            class="table-responsive table-data"
+            class="table-responsive table-data table-data-list-player"
             :pagination="false"
             :columns="columns"
             :data-source="showAll ? data : data.slice(0, lengthShow)"
@@ -235,5 +235,9 @@ const data = ref(generateFakeData(50));
 <style>
 .ant-modal-close {
   display: none !important;
+}
+
+.table-data-list-player .ant-table-cell {
+  padding: 5px 10px !important;
 }
 </style>

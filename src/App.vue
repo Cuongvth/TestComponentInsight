@@ -134,7 +134,6 @@ onMounted(() => {
 .table-data .ant-table-cell {
   font-weight: 500 !important;
   text-align: center;
-  padding: 5px 10px !important;
 }
 
 .table-data .ant-table-pagination {
