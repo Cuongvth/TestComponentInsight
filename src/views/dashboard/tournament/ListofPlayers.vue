@@ -43,30 +43,28 @@
             </template>
             <template v-else-if="column.dataIndex === 'thaoTac'">
               <div style="display: flex; justify-content: space-around; align-items: center; width: 100%">
-                <div class="show-item">
-                  <sdButton
-                    style="float: right; margin-bottom: 10px"
-                    size="default"
-                    shape="circle"
-                    type="primary"
-                    @click="showItem(text)"
-                  >
-                    <span>Xem lại</span><span> </span>
-                    <unicon name="align-center-alt"></unicon>
-                  </sdButton>
-                </div>
-                <div class="delete-item">
-                  <sdButton
-                    style="float: right; margin-bottom: 10px"
-                    size="default"
-                    shape="circle"
-                    type="primary"
-                    @click="deleteItem(text)"
-                  >
-                    <span>Xóa</span><span> </span>
-                    <unicon name="align-center-alt"></unicon>
-                  </sdButton>
-                </div>
+                <sdButton
+                  size="default"
+                  shape="circle"
+                  type="primary"
+                  @click="showItem(text)"
+                  class="show-item"
+                  style="border-radius: 50px"
+                >
+                  <span>Xem lại</span><span> </span>
+                  <unicon name="align-center-alt"></unicon>
+                </sdButton>
+                <sdButton
+                  size="default"
+                  shape="circle"
+                  type="primary"
+                  @click="deleteItem(text)"
+                  class="delete-item"
+                  style="border-radius: 50px"
+                >
+                  <span>Xóa</span><span> </span>
+                  <unicon name="align-center-alt"></unicon>
+                </sdButton>
               </div>
             </template>
             <template v-else-if="column.dataIndex === 'ngayDangKi'">

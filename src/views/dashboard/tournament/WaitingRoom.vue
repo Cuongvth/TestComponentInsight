@@ -129,7 +129,7 @@ import Mock from 'mockjs';
 import { ref } from 'vue';
 import dayjs from 'dayjs';
 import 'dayjs/locale/en';
-import ListofPlayers from './listofplayers.vue';
+import ListofPlayers from './ListofPlayers.vue';
 
 const generateFakeData = (count: number) => {
   const dataSource = [];
