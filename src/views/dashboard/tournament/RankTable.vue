@@ -1,13 +1,15 @@
 <template>
-  <div style="height: calc(100vh - 145px)">
-    <sdPageHeader :title="'Bảng xếp hạng'" class="ninjadash-page-header-main"></sdPageHeader>
-    <div style="display: flex; justify-content: end; padding: 0 50px">
-      <sdButton style="margin-bottom: 10px">
-        <span>Bộ lọc</span><span> </span>
-        <unicon name="align-center-alt"></unicon>
-      </sdButton>
+  <div style="height: calc(100vh - 125px); display: grid; grid-template-rows: auto 1fr auto">
+    <div>
+      <sdPageHeader :title="'Bảng xếp hạng'" class="ninjadash-page-header-main"></sdPageHeader>
+      <div style="display: flex; justify-content: end; padding: 0 50px">
+        <sdButton style="margin-bottom: 10px">
+          <span>Bộ lọc</span><span> </span>
+          <unicon name="align-center-alt"></unicon>
+        </sdButton>
+      </div>
     </div>
-    <div style="max-height: calc(100% - 210px); overflow-y: scroll; margin-bottom: 20px">
+    <div style="overflow-y: scroll; margin-bottom: 20px">
       <Main>
         <a-table class="table-responsive table-data" :pagination="pagination" :columns="columns" :data-source="data">
           <template #bodyCell="{ column, text }">
@@ -19,7 +21,7 @@
         </a-table>
       </Main>
     </div>
-    <div style="display: flex; justify-content: end; padding: 0 50px">
+    <div style="display: flex; justify-content: end; padding: 0 45px; margin-bottom: 10px">
       <a-pagination
         v-model:current="pagination.current"
         v-model:pageSize="pagination.pageSize"

@@ -1,25 +1,118 @@
 <template>
-  <div style="height: calc(100vh - 145px)">
-    <sdPageHeader :title="'Bảng xếp hạng'" class="ninjadash-page-header-main"></sdPageHeader>
-    <div style="display: flex; justify-content: end; padding: 0 50px">
-      <sdButton style="margin-bottom: 10px">
-        <span>Bộ lọc</span><span> </span>
-        <unicon name="align-center-alt"></unicon>
-      </sdButton>
+  <div style="height: calc(100vh - 125px); display: grid; grid-template-rows: auto 1fr auto">
+    <div>
+      <div style="padding: 20px 50px 0 30px">
+        <a-row :gutter="[16, 30]">
+          <a-col :span="12" :xxl="12" :xl="12" :lg="12" :md="24" :sm="24" :xs="24">
+            <div style="display: flex; justify-content: start; align-items: center; gap: 20px; height: 100%">
+              <a-image
+                :width="100"
+                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
+                style="border-radius: 10px"
+              />
+              <div>
+                <p style="font-size: xx-large; font-weight: 600; margin: 0">Ngày thứ 3 đen tối</p>
+                <p style="font-size: larger; font-weight: 600; margin: 0">Số người: 8/10</p>
+              </div>
+            </div>
+          </a-col>
+          <a-col :span="12" :xxl="12" :xl="12" :lg="12" :md="24" :sm="24" :xs="24">
+            <div style="display: flex; justify-content: start; align-items: center; gap: 50px; height: 100%">
+              <div>
+                <p style="font-size: larger; font-weight: 600; margin: 0">Mã giải đấu:</p>
+                <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">Mời bạn bè tham gia:</p>
+              </div>
+              <div>
+                <p style="font-size: larger; font-weight: 600; margin: 0">#48166</p>
+                <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">
+                  <sdButton style="border: 2px solid #f0f0f0; border-radius: 10px; height: 30px">
+                    <span>Mời bạn bè</span><span> </span>
+                    <unicon name="link"></unicon>
+                  </sdButton>
+                </p>
+              </div>
+            </div>
+          </a-col>
+          <a-col :span="12" :xxl="12" :xl="12" :lg="12" :md="24" :sm="24" :xs="24">
+            <div style="display: flex; justify-content: start; align-items: center; gap: 50px; height: 100%">
+              <div>
+                <p style="font-size: larger; font-weight: 600; margin: 0">Bắt đầu:</p>
+                <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">Ngôn ngữ:</p>
+              </div>
+              <div>
+                <p style="font-size: larger; font-weight: 600; margin: 0">
+                  {{ dayjs(new Date()).locale('en').format('MMMM DD, YYYY HH:mm') }}
+                </p>
+                <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">JAVA</p>
+              </div>
+            </div>
+          </a-col>
+          <a-col :span="12" :xxl="12" :xl="12" :lg="12" :md="24" :sm="24" :xs="24">
+            <div style="display: flex; justify-content: start; align-items: center; gap: 50px; height: 100%">
+              <div>
+                <p style="font-size: larger; font-weight: 600; margin: 0">Thời gian đấu:</p>
+                <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">Elo tối thiểu:</p>
+              </div>
+              <div>
+                <p style="font-size: larger; font-weight: 600; margin: 0">120 phút</p>
+                <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">Không</p>
+              </div>
+            </div>
+          </a-col>
+        </a-row>
+      </div>
+      <div style="display: flex; justify-content: end; padding: 0 50px">
+        <ListofPlayers style="margin-bottom: 10px" />
+      </div>
     </div>
-    <div style="max-height: calc(100% - 210px); overflow-y: scroll; margin-bottom: 20px">
+    <div style="overflow-y: scroll; margin-bottom: 20px">
       <Main>
         <a-table class="table-responsive table-data" :pagination="pagination" :columns="columns" :data-source="data">
           <template #bodyCell="{ column, text }">
-            <template v-if="column.dataIndex === 'key'">
-              <img v-if="getRankingStyle(text).icon" :src="getRankingStyle(text).icon" style="width: 30px" />
-              <span v-else>{{ text }}</span>
+            <template v-if="column.dataIndex === 'hocVien'">
+              <a-row :gutter="[16, 10]">
+                <a-col :span="5" :xxl="5" :xl="5" :lg="24" :md="24" :sm="24" :xs="24">
+                  <div style="display: flex; justify-content: center; align-items: center; height: 100%">
+                    <img style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover" :src="text.avatar" />
+                  </div>
+                </a-col>
+                <a-col :span="5" :xxl="5" :xl="5" :lg="24" :md="24" :sm="24" :xs="24">
+                  <div>
+                    <p style="margin: 0">
+                      {{ text.name }}
+                    </p>
+                    <span>{{ text.email }}</span>
+                  </div>
+                </a-col>
+              </a-row>
+            </template>
+            <template v-else-if="column.dataIndex === 'trangThai'">
+              <sdButton
+                v-if="text === 1"
+                size="default"
+                shape="circle"
+                type="primary"
+                style="border-radius: 50px"
+                class="btn-cho"
+              >
+                Đã tham gia
+              </sdButton>
+              <sdButton
+                v-else
+                size="default"
+                shape="circle"
+                type="primary"
+                style="border-radius: 50px"
+                class="btn-dathamgia"
+              >
+                Đang chờ
+              </sdButton>
             </template>
           </template>
         </a-table>
       </Main>
     </div>
-    <div style="display: flex; justify-content: end; padding: 0 50px">
+    <div style="display: flex; justify-content: center; margin-bottom: 10px">
       <a-pagination
         v-model:current="pagination.current"
         v-model:pageSize="pagination.pageSize"
@@ -34,38 +127,24 @@
 import { Main } from '../../styled';
 import Mock from 'mockjs';
 import { ref } from 'vue';
-
-const getRankingStyle = (order: any) => {
-  let color, icon;
-  switch (order) {
-    case 1:
-      color = '#feaa2b';
-      icon = 'https://cdn-icons-png.flaticon.com/512/5406/5406792.png';
-      break;
-    case 2:
-      color = '#9e9e9e';
-      icon = 'https://cdn-icons-png.flaticon.com/512/2583/2583319.png';
-      break;
-    case 3:
-      color = '#ce7430';
-      icon = 'https://cdn-icons-png.flaticon.com/512/2583/2583434.png';
-      break;
-    default:
-      color = '#000000';
-  }
-  return { color, icon };
-};
+import dayjs from 'dayjs';
+import 'dayjs/locale/en';
+import ListofPlayers from './listofplayers.vue';
 
 const generateFakeData = (count: number) => {
   const dataSource = [];
 
   for (let i = 1; i <= count; i++) {
     const fakeData = Mock.mock({
-      key: i,
-      name: Mock.mock('@name'),
-      elloCoding: '@integer(10000, 99999)',
-      appellation: '@pick(["Chiến thần", "Kỳ phùng địch thủ", "Độc cô cầu bại", "Thách đấu"])',
-      contestEntered: '@integer(100, 1000)',
+      xepHang: i,
+      hocVien: {
+        name: Mock.mock('@name'),
+        email: '@string("lower", 5, 10)@mock.com',
+        avatar: 'https://nemthuanviet.com/wp-content/uploads/2023/10/cho-long-xu-2.jpg',
+      },
+      title: '@pick(["Chiến thần", "Kỳ phùng địch thủ", "Độc cô cầu bại", "Thách đấu"])',
+      elo: '@integer(10000, 99999)',
+      trangThai: '@integer(0, 1)',
     });
 
     dataSource.push(fakeData);
@@ -76,41 +155,32 @@ const generateFakeData = (count: number) => {
 
 const columns = [
   {
-    title: 'Xếp hạng',
-    dataIndex: 'key',
-    key: 'key',
-    sorter: (a: any, b: any) => a.key - b.key,
+    title: 'Học viên',
+    dataIndex: 'hocVien',
+    key: 'hocVien',
   },
   {
-    title: 'Ello Coding',
-    dataIndex: 'elloCoding',
-    key: 'elloCoding',
+    title: 'Title',
+    dataIndex: 'title',
+    key: 'title',
   },
   {
-    title: 'Họ tên',
-    dataIndex: 'name',
-    key: 'name',
-    sorter: (a: any, b: any) => a.name.localeCompare(b.name),
+    title: 'Elo',
+    dataIndex: 'elo',
+    key: 'elo',
   },
   {
-    title: 'Danh hiệu',
-    dataIndex: 'appellation',
-    key: 'appellation',
-    filters: [
-      { text: 'Chiến thần', value: 'Chiến thần' },
-      { text: 'Kỳ phùng địch thủ', value: 'Kỳ phùng địch thủ' },
-      { text: 'Độc cô cầu bại', value: 'Độc cô cầu bại' },
-      { text: 'Thách đấu', value: 'Thách đấu' },
-    ],
-    onFilter: (value: any, record: any) => record.appellation === value,
+    title: 'Xếp hạng LTS',
+    dataIndex: 'xepHang',
+    key: 'xepHang',
   },
   {
-    title: 'Cuộc thi đã tham gia',
-    dataIndex: 'contestEntered',
-    key: 'contestEntered',
-    sorter: (a: any, b: any) => a.contestEntered - b.contestEntered,
+    title: 'Trạng thái',
+    dataIndex: 'trangThai',
+    key: 'trangThai',
   },
 ];
+
 const data = generateFakeData(1000);
 
 const pagination = ref({
@@ -119,3 +189,13 @@ const pagination = ref({
   pageSize: 25,
 });
 </script>
+
+<style scoped>
+.btn-cho {
+  background: #3895ff !important;
+}
+
+.btn-dathamgia {
+  background: #ff4d4f !important;
+}
+</style>
