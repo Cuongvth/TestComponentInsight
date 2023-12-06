@@ -106,8 +106,8 @@ onMounted(() => {
 
 .ant-table-filter-column,
 .ant-table-column-sorters {
-  justify-content: center;
-  gap: 2px;
+  justify-content: center !important;
+  gap: 5px;
 }
 
 .table-data .ant-table-column-title {

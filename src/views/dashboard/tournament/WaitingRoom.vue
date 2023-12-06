@@ -62,7 +62,7 @@
         </a-row>
       </div>
       <div style="display: flex; justify-content: end; padding: 0 50px">
-        <ListofPlayers style="margin-bottom: 10px" />
+        <ListofPlayers style="margin-bottom: 10px" :giai-dau-id="giaiDauId" />
       </div>
     </div>
     <div style="overflow-y: scroll; margin-bottom: 20px">

@@ -84,10 +84,16 @@ import 'dayjs/locale/en';
 import * as useAPI from './useAPI';
 import Mock from 'mockjs';
 
+const props = defineProps({
+  giaiDauId: {
+    type: Number,
+    required: true,
+  },
+});
+
 const open = ref(false);
 const showAll = ref(false);
 const lengthShow = ref(7);
-const giaiDauId = 2;
 
 const resizeWindow = () => {
   var newHeight = window.innerHeight;
@@ -131,7 +137,7 @@ const showItem = (event: any) => {
 };
 
 const deleteItem = async (event: any) => {
-  await loadData(await useAPI.deleteUserInGiaiDau(event, giaiDauId));
+  await loadData(await useAPI.deleteUserInGiaiDau(event, props.giaiDauId));
 };
 
 const getRankingStyle = (order: any) => {
@@ -229,7 +235,7 @@ const loadData = async (lstData: any) => {
 
 const data = ref([]);
 
-await loadData(await useAPI.loadUserOfTournament(giaiDauId));
+await loadData(await useAPI.loadUserOfTournament(props.giaiDauId));
 </script>
 
 <style scoped>
