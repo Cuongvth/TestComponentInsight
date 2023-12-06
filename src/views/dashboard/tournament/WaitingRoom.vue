@@ -130,59 +130,66 @@ import { ref } from 'vue';
 import dayjs from 'dayjs';
 import 'dayjs/locale/en';
 import ListofPlayers from './ListofPlayers.vue';
+import * as useAPI from './useAPI';
 
-const generateFakeData = (count: number) => {
-  const dataSource = [];
-
-  for (let i = 1; i <= count; i++) {
-    const fakeData = Mock.mock({
-      xepHang: i,
-      hocVien: {
-        name: Mock.mock('@name'),
-        email: '@string("lower", 5, 10)@mock.com',
-        avatar: 'https://nemthuanviet.com/wp-content/uploads/2023/10/cho-long-xu-2.jpg',
-      },
-      title: '@pick(["Chiến thần", "Kỳ phùng địch thủ", "Độc cô cầu bại", "Thách đấu"])',
-      elo: '@integer(10000, 99999)',
-      trangThai: '@integer(0, 1)',
-      isMe: '@integer(0, 1)',
-    });
-
-    dataSource.push(fakeData);
-  }
-
-  return dataSource;
-};
+const giaiDauId = 2;
 
 const columns = [
   {
     title: 'Học viên',
     dataIndex: 'hocVien',
     key: 'hocVien',
+    sorter: (a: any, b: any) => a.hocVien.name.localeCompare(b.hocVien.name),
   },
   {
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
+    filters: [
+      { text: 'Chiến thần', value: 'Chiến thần' },
+      { text: 'Kỳ phùng địch thủ', value: 'Kỳ phùng địch thủ' },
+      { text: 'Độc cô cầu bại', value: 'Độc cô cầu bại' },
+      { text: 'Thách đấu', value: 'Thách đấu' },
+    ],
+    onFilter: (value: any, record: any) => record.title === value,
   },
   {
     title: 'Elo',
     dataIndex: 'elo',
     key: 'elo',
+    sorter: (a: any, b: any) => a.elo - b.elo,
   },
   {
     title: 'Xếp hạng LTS',
     dataIndex: 'xepHang',
     key: 'xepHang',
+    sorter: (a: any, b: any) => a.xepHang - b.xepHang,
   },
   {
     title: 'Trạng thái',
     dataIndex: 'trangThai',
     key: 'trangThai',
+    filters: [
+      { text: 'Đang chờ', value: 0 },
+      { text: 'Đã tham gia', value: 1 },
+    ],
+    onFilter: (value: any, record: any) => record.trangThai === value,
   },
 ];
 
-const data = generateFakeData(1000);
+const data = (await useAPI.loadUserOfTournament(giaiDauId)).data.user
+  .sort((a: any, b: any) => a.elo - b.elo)
+  .map((c: any, index: any) => ({
+    xepHang: index + 1,
+    hocVien: {
+      name: c.name,
+      email: c.email,
+      avatar: c.avatar,
+    },
+    title: c.danhHieu,
+    elo: c.elo,
+    trangThai: Mock.mock('@integer(0, 1)'),
+  }));
 
 const pagination = ref({
   total: data.length,

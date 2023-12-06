@@ -78,19 +78,19 @@
 </template>
 
 <script setup lang="ts">
-import Mock from 'mockjs';
 import { ref } from 'vue';
 import dayjs from 'dayjs';
 import 'dayjs/locale/en';
+import * as useAPI from './useAPI';
+import Mock from 'mockjs';
 
 const open = ref(false);
 const showAll = ref(false);
 const lengthShow = ref(7);
+const giaiDauId = 2;
 
 const resizeWindow = () => {
   var newHeight = window.innerHeight;
-  console.log(newHeight);
-
   if (newHeight > 420 && newHeight <= 525) {
     lengthShow.value = 1;
   } else if (newHeight > 525 && newHeight <= 630) {
@@ -130,8 +130,8 @@ const showItem = (event: any) => {
   console.log(event);
 };
 
-const deleteItem = (event: any) => {
-  data.value = data.value.filter((c) => c.thaoTac !== event);
+const deleteItem = async (event: any) => {
+  await loadData(await useAPI.deleteUserInGiaiDau(event, giaiDauId));
 };
 
 const getRankingStyle = (order: any) => {
@@ -155,45 +155,40 @@ const getRankingStyle = (order: any) => {
   return { color, icon };
 };
 
-const generateFakeData = (count: number) => {
-  const dataSource = [];
+const convertToSeconds = (timeString: any) => {
+  const [hours, minutes, seconds] = timeString.split(':').map(Number);
+  return hours * 3600 + minutes * 60 + seconds;
+};
 
-  for (let i = 1; i <= count; i++) {
-    const fakeData = Mock.mock({
-      key: i,
-      thaoTac: i,
-      hocVien: {
-        name: Mock.mock('@name'),
-        email: '@string("lower", 5, 10)@mock.com',
-        avatar: 'https://nemthuanviet.com/wp-content/uploads/2023/10/cho-long-xu-2.jpg',
-      },
-      title: '@pick(["Chiến thần", "Kỳ phùng địch thủ", "Độc cô cầu bại", "Thách đấu"])',
-      elo: '@integer(10000, 99999)',
-      ngayDangKi: '@date("yyyy-MM-dd", "30 days ago")',
-      thoiGian: '@time("HH:mm:ss")',
-    });
-
-    dataSource.push(fakeData);
-  }
-
-  return dataSource;
+const convertToDateValue = (dateString: any) => {
+  const dateObject = new Date(dateString);
+  return dateObject.getTime(); // Chuyển đổi thành giá trị timestamp
 };
 
 const columns = ref([
   {
-    title: 'Hạng',
+    title: 'Số thứ tự',
     dataIndex: 'key',
     key: 'key',
+    sorter: (a: any, b: any) => a.key - b.key,
   },
   {
     title: 'Học viên',
     dataIndex: 'hocVien',
     key: 'hocVien',
+    sorter: (a: any, b: any) => a.hocVien.name.localeCompare(b.hocVien.name),
   },
   {
     title: 'Title',
     dataIndex: 'title',
     key: 'title',
+    filters: [
+      { text: 'Chiến thần', value: 'Chiến thần' },
+      { text: 'Kỳ phùng địch thủ', value: 'Kỳ phùng địch thủ' },
+      { text: 'Độc cô cầu bại', value: 'Độc cô cầu bại' },
+      { text: 'Thách đấu', value: 'Thách đấu' },
+    ],
+    onFilter: (value: any, record: any) => record.title === value,
   },
   {
     title: 'Elo',
@@ -204,15 +199,37 @@ const columns = ref([
     title: 'Thời gian tham gia',
     dataIndex: 'thoiGian',
     key: 'thoiGian',
+    sorter: (a: any, b: any) => convertToSeconds(a.thoiGian) - convertToSeconds(b.thoiGian),
   },
   {
     title: 'Ngày đăng kí',
     dataIndex: 'ngayDangKi',
-    key: 'ngayDangKi',
+    key: 'thoiGian',
+    sorter: (a: any, b: any) => convertToDateValue(a.ngayDangKi) - convertToDateValue(b.ngayDangKi),
   },
 ]);
 
-const data = ref(generateFakeData(50));
+const loadData = async (lstData: any) => {
+  data.value = lstData.data.user
+    .sort((a: any, b: any) => a.elo - b.elo)
+    .map((c: any, index: any) => ({
+      key: index + 1,
+      thaoTac: c.id,
+      hocVien: {
+        name: c.name,
+        email: c.email,
+        avatar: c.avatar,
+      },
+      title: c.danhHieu,
+      elo: c.elo,
+      ngayDangKi: Mock.mock('@date("yyyy-MM-dd", "30 days ago")'),
+      thoiGian: Mock.mock('@time("HH:mm:ss")'),
+    }));
+};
+
+const data = ref([]);
+
+await loadData(await useAPI.loadUserOfTournament(giaiDauId));
 </script>
 
 <style scoped>

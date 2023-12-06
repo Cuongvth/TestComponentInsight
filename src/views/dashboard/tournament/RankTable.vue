@@ -36,6 +36,7 @@
 import { Main } from '../../styled';
 import Mock from 'mockjs';
 import { ref } from 'vue';
+import * as useAPI from './useAPI';
 
 const getRankingStyle = (order: any) => {
   let color, icon;
@@ -58,24 +59,6 @@ const getRankingStyle = (order: any) => {
   return { color, icon };
 };
 
-const generateFakeData = (count: number) => {
-  const dataSource = [];
-
-  for (let i = 1; i <= count; i++) {
-    const fakeData = Mock.mock({
-      key: i,
-      name: Mock.mock('@name'),
-      elloCoding: '@integer(10000, 99999)',
-      appellation: '@pick(["Chiến thần", "Kỳ phùng địch thủ", "Độc cô cầu bại", "Thách đấu"])',
-      contestEntered: '@integer(100, 1000)',
-    });
-
-    dataSource.push(fakeData);
-  }
-
-  return dataSource;
-};
-
 const columns = [
   {
     title: 'Xếp hạng',
@@ -85,8 +68,8 @@ const columns = [
   },
   {
     title: 'Ello Coding',
-    dataIndex: 'elloCoding',
-    key: 'elloCoding',
+    dataIndex: 'elo',
+    key: 'elo',
   },
   {
     title: 'Họ tên',
@@ -96,24 +79,24 @@ const columns = [
   },
   {
     title: 'Danh hiệu',
-    dataIndex: 'appellation',
-    key: 'appellation',
+    dataIndex: 'danhHieu',
+    key: 'danhHieu',
     filters: [
       { text: 'Chiến thần', value: 'Chiến thần' },
       { text: 'Kỳ phùng địch thủ', value: 'Kỳ phùng địch thủ' },
       { text: 'Độc cô cầu bại', value: 'Độc cô cầu bại' },
       { text: 'Thách đấu', value: 'Thách đấu' },
     ],
-    onFilter: (value: any, record: any) => record.appellation === value,
+    onFilter: (value: any, record: any) => record.danhHieu === value,
   },
   {
     title: 'Cuộc thi đã tham gia',
-    dataIndex: 'contestEntered',
-    key: 'contestEntered',
-    sorter: (a: any, b: any) => a.contestEntered - b.contestEntered,
+    dataIndex: 'cuocThiDaThamGia',
+    key: 'cuocThiDaThamGia',
+    sorter: (a: any, b: any) => a.cuocThiDaThamGia - b.cuocThiDaThamGia,
   },
 ];
-const data = generateFakeData(1000);
+const data = (await useAPI.loadUser()).data.map((c: any, index: any) => ({ key: index + 1, ...c }));
 
 const pagination = ref({
   total: data.length,

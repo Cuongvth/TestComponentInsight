@@ -1,3 +1,4 @@
+import '@/api/db';
 import app from './config/configApp';
 import router from './router/index';
 import store from './vuex/store';
@@ -12,6 +13,7 @@ import '@/core/plugins/ckEditor';
 import '@/core/plugins/maps';
 import '@/core/components/custom';
 import '@/core/components/style';
+import './testmock';
 
 app.use(store);
 app.use(router);
