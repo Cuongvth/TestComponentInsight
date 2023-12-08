@@ -2,7 +2,9 @@ import Mock from 'mockjs';
 import mock from '../mock';
 import loaiGiaiDau from './loaiGiaiDau';
 import theThucThiDau from './theThucThiDau';
+import ngonNguLapTrinh from './ngonNguLapTrinh';
 import user from './user';
+import ngonNgulapTrinh from './ngonNguLapTrinh';
 
 const generateFakeDataTournament = (count) => {
   const dataSource = [];
@@ -14,14 +16,18 @@ const generateFakeDataTournament = (count) => {
       tenGiaiDau: '@string("lower", 5, 10)',
       hinhAnh: 'https://nemthuanviet.com/wp-content/uploads/2023/10/cho-long-xu-2.jpg',
       moTaNgan: '@string("lower", 100, 500)',
-      thoiGianBatDau: '@date("yyyy-MM-dd", "30 days ago")',
-      thoiGianKetThuc: new Date(),
+      thoiGianBatDau: '@datetime("yyyy-MM-dd HH:mm:ss", "30 days ago")',
+      thoiGianKetThuc: '@datetime("yyyy-MM-dd HH:mm:ss", "30 days from now")',
       dieuLe: '@string("lower", 100, 500)',
       gioiHanSoDoiThu: '@integer(5, 50)',
-      gioiHanElo: '@integer(100000, 999999)',
+      gioiHanElo: '@integer(0, 10000)',
+      thoiGianDau: `@pick([30, 60, 120])`,
       isPublic: '@boolean',
       loaiGiaiDau: `@pick(${loaiGiaiDau.map((c) => c.id)})`,
+      ngonNguLapTrinh: `@pick(${ngonNgulapTrinh.map((c) => c.id)})`,
       trangThai: '@integer(1, 2)',
+      key: '@string("lower", 5, 10)',
+      link: '@string("lower", 10, 20)',
       user: [],
     });
     for (let index = 0; index < fakeData.gioiHanSoDoiThu; index++) {
@@ -45,6 +51,7 @@ mock.onGet('/api/GiaiDauById').reply((config) => {
     const enrichedTournament = {
       ...foundTournament,
       user: user.filter((d) => foundTournament.user.includes(d.id)),
+      ngonNguLapTrinh: ngonNgulapTrinh.find((d) => foundTournament.ngonNguLapTrinh === d.id),
     };
     return [200, enrichedTournament];
   } else {
@@ -64,6 +71,7 @@ mock.onPost('/api/DeleteUserInGiaiDau').reply((config) => {
       const enrichedTournament = {
         ...foundTournament,
         user: user.filter((d) => foundTournament.user.includes(d.id)),
+        ngonNgulapTrinh: ngonNgulapTrinh.find((d) => foundTournament.ngonNguLapTrinh === d.id),
       };
       return [200, enrichedTournament];
     } else {

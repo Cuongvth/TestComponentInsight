@@ -5,14 +5,12 @@
         <a-row :gutter="[16, 30]">
           <a-col :span="12" :xxl="12" :xl="12" :lg="12" :md="24" :sm="24" :xs="24">
             <div style="display: flex; justify-content: start; align-items: center; gap: 20px; height: 100%">
-              <a-image
-                :width="100"
-                src="https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png"
-                style="border-radius: 10px"
-              />
+              <a-image :width="100" :src="giaiDau.hinhAnh" style="border-radius: 10px" />
               <div>
-                <p style="font-size: xx-large; font-weight: 600; margin: 0">Ngày thứ 3 đen tối</p>
-                <p style="font-size: larger; font-weight: 600; margin: 0">Số người: 8/10</p>
+                <p style="font-size: xx-large; font-weight: 600; margin: 0">{{ giaiDau.tenGiaiDau }}</p>
+                <p style="font-size: larger; font-weight: 600; margin: 0">
+                  Số người: {{ giaiDau.user.length }}/ {{ giaiDau.gioiHanSoDoiThu }}
+                </p>
               </div>
             </div>
           </a-col>
@@ -23,9 +21,12 @@
                 <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">Mời bạn bè tham gia:</p>
               </div>
               <div>
-                <p style="font-size: larger; font-weight: 600; margin: 0">#48166</p>
+                <p style="font-size: larger; font-weight: 600; margin: 0">#{{ giaiDau.key }}</p>
                 <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">
-                  <sdButton style="border: 2px solid #f0f0f0; border-radius: 10px; height: 30px">
+                  <sdButton
+                    style="border: 2px solid #f0f0f0; border-radius: 10px; height: 30px"
+                    @click="copyLink(giaiDau.link)"
+                  >
                     <span>Mời bạn bè</span><span> </span>
                     <unicon name="link"></unicon>
                   </sdButton>
@@ -41,9 +42,11 @@
               </div>
               <div>
                 <p style="font-size: larger; font-weight: 600; margin: 0">
-                  {{ dayjs(new Date()).locale('en').format('MMMM DD, YYYY HH:mm') }}
+                  {{ dayjs(giaiDau.thoiGianBatDau).locale('en').format('MMMM DD, YYYY HH:mm') }}
                 </p>
-                <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">JAVA</p>
+                <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">
+                  {{ giaiDau.ngonNguLapTrinh.tenNgonNgu }}
+                </p>
               </div>
             </div>
           </a-col>
@@ -54,8 +57,8 @@
                 <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">Elo tối thiểu:</p>
               </div>
               <div>
-                <p style="font-size: larger; font-weight: 600; margin: 0">120 phút</p>
-                <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">Không</p>
+                <p style="font-size: larger; font-weight: 600; margin: 0">{{ giaiDau.thoiGianDau }} phút</p>
+                <p style="font-size: larger; font-weight: 600; margin: 0; margin-top: 10px">{{ giaiDau.gioiHanElo }}</p>
               </div>
             </div>
           </a-col>
@@ -134,6 +137,11 @@ import * as useAPI from './useAPI';
 
 const giaiDauId = 2;
 
+const copyLink = (link: any) => {
+  navigator.clipboard.writeText(link);
+  alert('Copied the text: ' + link);
+};
+
 const columns = [
   {
     title: 'Học viên',
@@ -176,8 +184,8 @@ const columns = [
     onFilter: (value: any, record: any) => record.trangThai === value,
   },
 ];
-
-const data = (await useAPI.loadUserOfTournament(giaiDauId)).data.user
+const giaiDau = (await useAPI.loadUserOfTournament(giaiDauId)).data;
+const data = giaiDau.user
   .sort((a: any, b: any) => a.elo - b.elo)
   .map((c: any, index: any) => ({
     xepHang: index + 1,
