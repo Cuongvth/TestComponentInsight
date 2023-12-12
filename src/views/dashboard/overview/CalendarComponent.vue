@@ -66,10 +66,12 @@
                 <template v-for="event in events" :key="event.id">
                   <sdDropdown
                     v-if="
-                      (dayjs(weeks[week].start).date() === dayjs(event.date[0], 'DD/MM/YYYY').date() ||
-                        dayjs(weeks[week].start).date() === dayjs(event.date[1], 'DD/MM/YYYY').date()) &&
-                      dayjs(time, 'h A').hour() >= dayjs(event.time[0], 'h:mm a').hour() &&
-                      dayjs(time, 'h A').hour() <= dayjs(event.time[1], 'h:mm a').hour()
+                      dayjs(`${dayjs(weeks[week].start).format('DD/MM/YYYY')} ${time}`, 'DD/MM/YYYY h A') >=
+                        dayjs(`${event.date[0]} ${event.time[0]}`, 'DD/MM/YYYY h:mm a') &&
+                      dayjs(`${dayjs(weeks[week].start).format('DD/MM/YYYY')} ${time}`, 'DD/MM/YYYY h A').add(
+                        1,
+                        'hour',
+                      ) <= dayjs(`${event.date[1]} ${event.time[1]}`, 'DD/MM/YYYY h:mm a')
                     "
                     class="event-dropdown"
                     style="padding: 0px"
@@ -109,11 +111,14 @@
                 <template v-for="event in events" :key="event.id">
                   <sdDropdown
                     v-if="
-                      (dayjs(weeks[week].start.add(item, 'day')).date() === dayjs(event.date[0], 'DD/MM/YYYY').date() ||
-                        dayjs(weeks[week].start.add(item, 'day')).date() ===
-                          dayjs(event.date[1], 'DD/MM/YYYY').date()) &&
-                      dayjs(time, 'h A').hour() >= dayjs(event.time[0], 'h:mm a').hour() &&
-                      dayjs(time, 'h A').hour() <= dayjs(event.time[1], 'h:mm a').hour()
+                      dayjs(
+                        `${dayjs(weeks[week].start.add(item, 'day')).format('DD/MM/YYYY')} ${time}`,
+                        'DD/MM/YYYY h A',
+                      ) >= dayjs(`${event.date[0]} ${event.time[0]}`, 'DD/MM/YYYY h:mm a') &&
+                      dayjs(
+                        `${dayjs(weeks[week].start.add(item, 'day')).format('DD/MM/YYYY')} ${time}`,
+                        'DD/MM/YYYY h A',
+                      ).add(1, 'hour') <= dayjs(`${event.date[1]} ${event.time[1]}`, 'DD/MM/YYYY h:mm a')
                     "
                     class="event-dropdown"
                     style="padding: 0px"
@@ -200,8 +205,9 @@ const loadWeek = () => {
   var start = startDate.add(0, 'day');
   var end = startDate.add(0, 'day');
   for (let index = 0; startDate.add(index, 'day').isBefore(endDate); index++) {
+    end = startDate.add(index, 'day');
     if (end.day() === 0) {
-      weeks.value.push({ start: start.startOf('day'), end: end });
+      weeks.value.push({ start: start, end: end });
       start = end.add(1, 'day');
     }
   }

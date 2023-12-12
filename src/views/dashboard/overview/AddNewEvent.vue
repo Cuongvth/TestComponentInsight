@@ -114,7 +114,7 @@ const AddNewEvent = defineComponent({
     const endDate = ref(dayjs(defaultValue.value, dateFormat));
     const timeStr = defaultValue.value.split(' ')[1] + ' ' + defaultValue.value.split(' ')[2];
     const startTime = ref(dayjs(timeStr, timeFormat));
-    const endTime = ref(dayjs(timeStr, timeFormat));
+    const endTime = ref(dayjs(timeStr, timeFormat).add(1, 'hour'));
 
     watch(
       () => props.defaultValue,
@@ -123,7 +123,7 @@ const AddNewEvent = defineComponent({
         endDate.value = dayjs(newVal, dateFormat);
         const timeStr = defaultValue.value.split(' ')[1] + ' ' + defaultValue.value.split(' ')[2];
         startTime.value = dayjs(timeStr, timeFormat);
-        endTime.value = dayjs(timeStr, timeFormat);
+        endTime.value = dayjs(timeStr, timeFormat).add(1, 'hour');
       },
     );
 

@@ -30,17 +30,12 @@
         <p class="event-info">
           <unicon name="calendar-alt" width="16"></unicon>
           <span class="label">Start date:</span>
-          <strong>{{ dayjs(date[0], 'DD/MM/YYYY').format('dddd, MMMM DD') }}</strong>
+          <strong>{{ dayjs(`${date[0]} ${time[0]}`, 'DD/MM/YYYY h:mm a').format('dddd, MMMM DD h:mm a') }}</strong>
         </p>
         <p class="event-info">
           <unicon name="calendar-alt" width="16"></unicon>
           <span class="label">End date:</span>
-          <strong>{{ dayjs(date[1], 'DD/MM/YYYY').format('dddd, MMMM DD') }}</strong>
-        </p>
-        <p class="event-info">
-          <unicon name="clock" width="16"></unicon>
-          <span class="label">Time:</span>
-          <strong>{{ `${time[0]} - ${time[1]}` }}</strong>
+          <strong>{{ dayjs(`${date[1]} ${time[1]}`, 'DD/MM/YYYY h:mm a').format('dddd, MMMM DD h:mm a') }}</strong>
         </p>
         <p class="event-info">
           <img :src="`/src/assets/img/icon/right.svg`" alt="menu" />

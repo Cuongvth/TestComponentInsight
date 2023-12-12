@@ -11,7 +11,7 @@ export default [
   },
   {
     title: 'Product Launch',
-    date: ['13/12/2023', '14/12/2023'],
+    date: ['13/12/2023', '13/12/2023'],
     id: 2,
     label: 'primary',
     time: ['4:00 pm', '5:00 pm'],
