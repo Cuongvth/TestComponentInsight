@@ -94,12 +94,11 @@ import dayjs from 'dayjs';
 import PropTypes from 'vue-types';
 import { AddEventWrap } from './Style';
 import { BasicFormWrapper } from '../../styled';
-import { computed, toRefs, ref, reactive } from 'vue';
-import { useStore } from 'vuex';
+import { toRefs, ref, reactive } from 'vue';
 import customParseFormat from 'dayjs/plugin/customParseFormat';
 dayjs.extend(customParseFormat);
 
-const dateFormat = 'MM/DD/YYYY';
+const dateFormat = 'DD/MM/YYYY';
 
 const formRef = ref();
 
@@ -112,9 +111,7 @@ const UpdateEvent = {
     onHandleUpdateEvent: PropTypes.func,
   },
   setup(props) {
-    const { state, dispatch } = useStore();
     const { data, onCancel, onHandleUpdateEvent } = toRefs(props);
-    const events = computed(() => state.calendar.events);
     const { title, id, description, label, time, date, type } = data.value;
 
     const formState = reactive({
@@ -166,7 +163,6 @@ const UpdateEvent = {
     return {
       formState,
       data,
-      events,
       title,
       id,
       description,

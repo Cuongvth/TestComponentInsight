@@ -66,8 +66,10 @@
                 <template v-for="event in events" :key="event.id">
                   <sdDropdown
                     v-if="
-                      dayjs(weeks[week].start).format('DD/MM/YYYY') === event.date[0] &&
-                      time === dayjs(event.time[0], 'h:mm a').format('h A')
+                      (dayjs(weeks[week].start).date() === dayjs(event.date[0], 'DD/MM/YYYY').date() ||
+                        dayjs(weeks[week].start).date() === dayjs(event.date[1], 'DD/MM/YYYY').date()) &&
+                      dayjs(time, 'h A').hour() >= dayjs(event.time[0], 'h:mm a').hour() &&
+                      dayjs(time, 'h A').hour() <= dayjs(event.time[1], 'h:mm a').hour()
                     "
                     class="event-dropdown"
                     style="padding: 0px"
@@ -76,8 +78,15 @@
                   >
                     <template #overlay>
                       <ProjectUpdate
+                        :title="event.title"
+                        :id="event.id"
+                        :description="event.description"
+                        :label="event.label"
+                        :type="event.type"
                         :onEventDelete="onEventDelete"
-                        v-bind="{ onHandleUpdateEvent: updateEvent, ...event }"
+                        :time="event.time"
+                        :date="event.date"
+                        :onHandleUpdateEvent="updateEvent"
                       />
                     </template>
                     <div :class="`${event.label} day-event-item`" style="cursor: pointer">
@@ -100,8 +109,11 @@
                 <template v-for="event in events" :key="event.id">
                   <sdDropdown
                     v-if="
-                      dayjs(weeks[week].start.add(item, 'day')).format('DD/MM/YYYY') === event.date[0] &&
-                      time === dayjs(event.time[0], 'h:mm a').format('h A')
+                      (dayjs(weeks[week].start.add(item, 'day')).date() === dayjs(event.date[0], 'DD/MM/YYYY').date() ||
+                        dayjs(weeks[week].start.add(item, 'day')).date() ===
+                          dayjs(event.date[1], 'DD/MM/YYYY').date()) &&
+                      dayjs(time, 'h A').hour() >= dayjs(event.time[0], 'h:mm a').hour() &&
+                      dayjs(time, 'h A').hour() <= dayjs(event.time[1], 'h:mm a').hour()
                     "
                     class="event-dropdown"
                     style="padding: 0px"
@@ -183,14 +195,13 @@ const week = ref(2);
 const currentLabel = ref('');
 
 const loadWeek = () => {
-  const startDate = dayjs(`${year.value}-${month.value}-01`);
+  const startDate = dayjs(`${year.value}-${month.value}-1`);
   const endDate = startDate.endOf('month');
   var start = startDate.add(0, 'day');
   var end = startDate.add(0, 'day');
   for (let index = 0; startDate.add(index, 'day').isBefore(endDate); index++) {
-    end = startDate.add(index, 'day');
     if (end.day() === 0) {
-      weeks.value.push({ start: start, end: end });
+      weeks.value.push({ start: start.startOf('day'), end: end });
       start = end.add(1, 'day');
     }
   }
@@ -247,6 +258,8 @@ const addNew = (event: any) => {
 };
 
 const updateEvent = (event: any) => {
+  console.log(event.time);
+
   const eventIndex = events.value.findIndex((e) => e.id === event.id);
   events.value[eventIndex] = {
     title: event.title,

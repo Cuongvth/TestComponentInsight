@@ -383,7 +383,8 @@ const CalendarWrapper = Styled.div`
                 li{
                     display: inline-block;
                     &:first-child{
-                        ${({ theme }) => (theme.rtl ? 'border-right' : 'border-left')}: 1px solid ${({ theme }) => theme[theme.mainContent]['border-color-default']};
+                        ${({ theme }) => (theme.rtl ? 'border-right' : 'border-left')}: 1px solid ${({ theme }) =>
+  theme[theme.mainContent]['border-color-default']};
                     }
                     &:not(:first-child){
                         a{
@@ -460,7 +461,8 @@ const CalendarWrapper = Styled.div`
                 &:first-child{
                     min-width: 75px;
                     padding: 16px 18px 16px 18px;
-                    ${({ theme }) => (theme.rtl ? 'border-left' : 'border-right')}: 1px solid color: ${({ theme }) => theme[theme.mainContent]['border-color-default']};
+                    ${({ theme }) => (theme.rtl ? 'border-left' : 'border-right')}: 1px solid color: ${({ theme }) =>
+  theme[theme.mainContent]['border-color-default']};
                 }
             }
         }
@@ -484,29 +486,19 @@ const CalendarWrapper = Styled.div`
                 color: ${({ theme }) => theme[theme.mainContent]['gray-text']};
                 .currentTime{
                     width: calc(100% + 20px);
-                    height: 1px;
+                    height: 2px;
                     display: block;
-                    position: relative;
+                    position: absolute;
+                    top: 50%;
                     ${({ theme }) => (theme.rtl ? 'right' : 'left')}: -10px;
-                    z-index: 222;
-                    &:after{
-                        position: absolute;
-                        left: 0;
-                        ${({ theme }) => (theme.rtl ? 'right' : 'left')}: 0px;
-                        top: -6px;
-                        width: 12px;
-                        height: 12px;
-                        border-radius: 50%;
-                        content: '';
-                        background-color: ${({ theme }) => theme['primary-color']};
-                    }
+                    z-index: 100;
                 }
                 .day-event-item{
                     width: 100%;
                     display: block;
                     border-radius: 3px 6px 6px 3px;
                     padding: 6px 12px !important;
-                    margin: 2px 0 !important;
+                    margin: 0 !important;
                     position: relative;
                     &:after{
                         position: absolute;
@@ -585,7 +577,8 @@ const CalendarWrapper = Styled.div`
             th,
             td{
                 &:not(:last-child){
-                    ${({ theme }) => (theme.rtl ? 'border-left' : 'border-right')}: 1px solid color: ${({ theme }) => theme[theme.mainContent]['border-color-default']};
+                    ${({ theme }) => (theme.rtl ? 'border-left' : 'border-right')}: 1px solid color: ${({ theme }) =>
+  theme[theme.mainContent]['border-color-default']};
                 }
             }
         }

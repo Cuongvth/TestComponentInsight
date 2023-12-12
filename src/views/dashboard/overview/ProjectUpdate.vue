@@ -29,8 +29,13 @@
       <div class="bodyUpdate">
         <p class="event-info">
           <unicon name="calendar-alt" width="16"></unicon>
-          <span class="label">Date:</span>
-          <strong>{{ dayjs(date[0]).format('dddd, MMMM DD') }}</strong>
+          <span class="label">Start date:</span>
+          <strong>{{ dayjs(date[0], 'DD/MM/YYYY').format('dddd, MMMM DD') }}</strong>
+        </p>
+        <p class="event-info">
+          <unicon name="calendar-alt" width="16"></unicon>
+          <span class="label">End date:</span>
+          <strong>{{ dayjs(date[1], 'DD/MM/YYYY').format('dddd, MMMM DD') }}</strong>
         </p>
         <p class="event-info">
           <unicon name="clock" width="16"></unicon>
