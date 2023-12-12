@@ -119,7 +119,6 @@ const UpdateEvent = {
       label: label.value,
     });
     const startDate = ref(dayjs(date.value[0], dateFormat));
-    console.log(startDate.value);
     const endDate = ref(dayjs(date.value[1], dateFormat));
     const startTime = ref(dayjs(time.value[0], 'h:mm a'));
     const endTime = ref(dayjs(time.value[1], 'h:mm a'));
