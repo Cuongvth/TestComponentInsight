@@ -1,9 +1,9 @@
 <template>
   <BasicFormWrapper>
     <AddEventWrap>
-      <a-form ref="formRef" :model="formState" :style="{ width: '100%' }" name="addNewEvent" @finish="handleSubmit">
+      <a-form ref="formRef" :style="{ width: '100%' }" :model="formState" name="addNewEvent" @finish="handleSubmit">
         <a-form-item v-bind="formItemLayout" label="Title" name="title">
-          <a-input v-model:value="formState.title" placeholder="Weekly report meeting" />
+          <a-input v-model:value="formState.title" placeholder="Write Your Event Title" />
         </a-form-item>
 
         <a-form-item v-bind="formItemLayout" name="type" label="Event Type">
@@ -92,49 +92,71 @@
 <script>
 import dayjs from 'dayjs';
 import PropTypes from 'vue-types';
-import { AddEventWrap } from '../Style';
-import { BasicFormWrapper } from '../../../styled';
-import { reactive, toRefs, ref, defineComponent } from 'vue';
+import { AddEventWrap } from './Style';
+import { BasicFormWrapper } from '../../styled';
+import { computed, toRefs, ref, reactive } from 'vue';
+import { useStore } from 'vuex';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+dayjs.extend(customParseFormat);
+
+const dateFormat = 'MM/DD/YYYY';
 
 const formRef = ref();
 
-const dateFormat = 'YYYY/MM/DD';
-
-const AddNewEvent = defineComponent({
-  name: 'AddNewEvent',
-  props: {
-    defaultValue: PropTypes.string,
-    onHandleAddEvent: PropTypes.func,
-  },
+const UpdateEvent = {
+  name: 'UpdateEvent',
   components: { AddEventWrap, BasicFormWrapper },
+  props: {
+    data: PropTypes.object,
+    onCancel: PropTypes.func,
+    onHandleUpdateEvent: PropTypes.func,
+  },
   setup(props) {
-    const { defaultValue, onHandleAddEvent } = toRefs(props);
-    const startDate = ref(dayjs(defaultValue.value, dateFormat));
-    const endDate = ref(dayjs(defaultValue.value, dateFormat));
-    const startTime = ref('');
-    const endTime = ref('');
-
-    const formItemLayout = reactive({
-      labelCol: { span: 4 },
-      wrapperCol: { span: 20 },
-    });
+    const { state, dispatch } = useStore();
+    const { data, onCancel, onHandleUpdateEvent } = toRefs(props);
+    const events = computed(() => state.calendar.events);
+    const { title, id, description, label, time, date, type } = data.value;
 
     const formState = reactive({
-      title: '',
-      description: '',
-      type: 'event',
-      label: 'primary',
+      title: title.value,
+      description: description.value,
+      type: type.value,
+      label: label.value,
     });
+    const startDate = ref(dayjs(date.value[0], dateFormat));
+    const endDate = ref(dayjs(date.value[1], dateFormat));
+    const startTime = ref(dayjs(time.value[0], 'h:mm a'));
+    const endTime = ref(dayjs(time.value[1], 'h:mm a'));
+
+    const formItemLayout = {
+      labelCol: { span: 4 },
+      wrapperCol: { span: 20 },
+    };
 
     const handleSubmit = (values) => {
-      onHandleAddEvent.value({
+      onHandleUpdateEvent.value({
         title: values.title,
+        id: id.value,
         description: values.description,
-        date: [dayjs(startDate.value).format('MM/DD/YYYY'), dayjs(endDate.value).format('MM/DD/YYYY')],
-        time: [startTime.value.format('HH:mm a'), endTime.value.format('HH:mm a')],
+        date: [dayjs(startDate.value).format('DD/MM/YYYY'), dayjs(endDate.value).format('DD/MM/YYYY')],
+        time: [startTime.value.format('h:mm a'), endTime.value.format('h:mm a')],
         type: values.type,
         label: values.label,
       });
+      onCancel.value();
+    };
+    const onChangeStart = (_, dateString) => {
+      startDate.value = dateString;
+    };
+    const onChangeEnd = (_, dateString) => {
+      endDate.value = dateString;
+    };
+
+    const onChangeStartTime = (times) => {
+      startTime.value = times;
+    };
+    const onChangeEndTime = (times) => {
+      endTime.value = times;
     };
 
     const resetForm = () => {
@@ -142,20 +164,32 @@ const AddNewEvent = defineComponent({
     };
 
     return {
+      formState,
+      data,
+      events,
+      title,
+      id,
+      description,
+      label,
+      time,
+      date,
+      type,
+      onChangeEnd,
+      onChangeEndTime,
+      onChangeStart,
+      handleSubmit,
+      onChangeStartTime,
+      formItemLayout,
+      dateFormat,
       startDate,
       endDate,
       startTime,
       endTime,
-      formItemLayout,
-      handleSubmit,
-      formState,
-      dateFormat,
-      dayjs,
       formRef,
       resetForm,
     };
   },
-});
+};
 
-export default AddNewEvent;
+export default UpdateEvent;
 </script>

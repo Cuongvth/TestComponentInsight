@@ -18,7 +18,7 @@ const checkRoles = (roles: any) => {
   return false;
 };
 const onOpenChange = (openKey: string[]) => {
-  openKeys.value = [openKey[openKey.length - 1]];
+  openKeys.value = [openKey[openKey.length - 1]]
 };
 </script>
 
@@ -99,26 +99,12 @@ const onOpenChange = (openKey: string[]) => {
 }
 
 .menu-sub:hover {
-  background-color: #f5eefc;
+  background-color: #F5EEFC;
   border-radius: 10px;
 }
 
 /* khi click */
-:global(
-    #app
-      > div
-      > div
-      > section
-      > section
-      > aside
-      > div
-      > div
-      > div:nth-child(1)
-      > ul
-      > li.ant-menu-submenu.ant-menu-submenu-inline.ant-menu-submenu-open
-      > div
-      > span
-  ) {
+:global(#app > div > div > section > section > aside > div > div > div:nth-child(1) > ul > li.ant-menu-submenu.ant-menu-submenu-inline.ant-menu-submenu-open > div>span) {
   background-color: orange;
   border-radius: 10px;
 }
@@ -136,76 +122,23 @@ const onOpenChange = (openKey: string[]) => {
 }
 
 /* màu chữ */
-:global(
-    .dSWqCR
-      .ant-layout-sider
-      .ant-layout-sider-children
-      .ant-menu
-      .ant-menu-submenu.ant-menu-submenu-selected
-      .ant-menu-title-content
-  ) {
+:global(.dSWqCR .ant-layout-sider .ant-layout-sider-children .ant-menu .ant-menu-submenu.ant-menu-submenu-selected .ant-menu-title-content) {
   color: black !important;
 }
 
 /* màu nền */
-:global(
-    .dSWqCR
-      .ant-layout-sider
-      .ant-layout-sider-children
-      .ant-menu
-      .ant-menu-submenu.ant-menu-submenu-open
-      > .ant-menu-submenu-title
-      svg
-  ) {
+:global(.dSWqCR .ant-layout-sider .ant-layout-sider-children .ant-menu .ant-menu-submenu.ant-menu-submenu-open >.ant-menu-submenu-title svg) {
   color: orange;
 }
 
 /* màu chữ */
-:global(
-    .dSWqCR
-      .ant-layout-sider
-      .ant-layout-sider-children
-      .ant-menu
-      .ant-menu-submenu.ant-menu-submenu-open
-      > .ant-menu-submenu-title
-      .title
-  ) {
+:global(.dSWqCR .ant-layout-sider .ant-layout-sider-children .ant-menu .ant-menu-submenu.ant-menu-submenu-open >.ant-menu-submenu-title .title) {
   color: rgb(255, 255, 255);
 }
 
 /* khi hover */
-:global(
-    #app
-      > div
-      > div
-      > section
-      > section
-      > aside
-      > div
-      > div
-      > div:nth-child(1)
-      > ul
-      > li.ant-menu-submenu.ant-menu-submenu-inline.ant-menu-submenu-active
-  ) {
-  color: red !important;
-}
 
-:global(
-    #app
-      > div
-      > div
-      > section
-      > section
-      > aside.ant-layout-sider-collapsed
-      > div
-      > div
-      > div:nth-child(1)
-      > ul
-      > li
-      > div
-      > span
-      > div.title
-  ) {
+:global(#app > div > div > section > section > aside.ant-layout-sider-collapsed > div > div > div:nth-child(1) > ul > li > div > span > div.title) {
   display: none;
 }
 
@@ -215,4 +148,14 @@ const onOpenChange = (openKey: string[]) => {
 :global(#app > div > div > section > section > aside > div > div > div:nth-child(1) > ul > li:nth-child(2) > div > i) {
   display: none;
 }
+
+:global(.dSWqCR .ant-layout-sider .ant-layout-sider-children .ant-menu.ant-menu-inline-collapsed .ant-menu-submenu span) {
+  display: block;
+}
+
+:global(.dSWqCR .ant-layout-sider.ant-layout-sider-collapsed .ant-layout-sider-children .ant-menu-submenu-title .title) {
+  display: none;
+}
 </style>
+
+

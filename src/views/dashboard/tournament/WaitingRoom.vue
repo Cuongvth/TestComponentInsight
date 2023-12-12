@@ -90,26 +90,10 @@
               </a-row>
             </template>
             <template v-else-if="column.dataIndex === 'trangThai'">
-              <sdButton
-                v-if="text === 1"
-                size="default"
-                shape="circle"
-                type="primary"
-                style="border-radius: 50px"
-                class="btn-cho"
-              >
+              <sdButton v-if="text === 1" size="default" shape="circle" type="primary" class="btn-cho">
                 Đã tham gia
               </sdButton>
-              <sdButton
-                v-else
-                size="default"
-                shape="circle"
-                type="primary"
-                style="border-radius: 50px"
-                class="btn-dathamgia"
-              >
-                Đang chờ
-              </sdButton>
+              <sdButton v-else size="default" shape="circle" type="primary" class="btn-dathamgia"> Đang chờ </sdButton>
             </template>
           </template>
         </a-table>
@@ -122,6 +106,10 @@
         :total="pagination.total"
         show-less-items
       />
+    </div>
+    <div style="display: flex; justify-content: end; margin-bottom: 10px; margin-right: 45px">
+      <sdButton shape="circle" style="border-width: 2px; margin-right: 10px">Rút khỏi giải đấu</sdButton>
+      <sdButton shape="circle" style="border-width: 2px" disabled> Bắt đầu sau: {{ '10 phút 35 giây' }} </sdButton>
     </div>
   </div>
 </template>
@@ -209,9 +197,13 @@ const pagination = ref({
 <style scoped>
 .btn-cho {
   background: #3895ff !important;
+  width: 100%;
+  max-width: 200px;
 }
 
 .btn-dathamgia {
-  background: #ff4d4f !important;
+  background: #ffc000 !important;
+  width: 100%;
+  max-width: 200px;
 }
 </style>

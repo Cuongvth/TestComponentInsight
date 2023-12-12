@@ -152,4 +152,9 @@ export default [
     name: 'phongcho',
     component: () => import('@/views/dashboard/tournament/WaitingRoom.vue'),
   },
+  {
+    path: '/overview',
+    name: 'overview',
+    component: () => import('@/views/dashboard/overview/OverviewComponent.vue'),
+  },
 ];

@@ -16,11 +16,7 @@
           <router-link to="./day">Today</router-link>
         </sdButton>
         <div class="calender-head__navigation">
-          <sdButton
-            @click="decrementYear"
-            class="btn-navigate"
-            type="light"
-            outlined
+          <sdButton @click="decrementYear" class="btn-navigate" type="light" outlined
             ><unicon name="angle-left"></unicon
           ></sdButton>
           <span class="date-label">
@@ -31,11 +27,7 @@
                     <a-col v-for="item in months" :sm="8" :key="item.id">
                       <span
                         @click="() => setMonth(item.id)"
-                        style="
-                          display: block;
-                          text-align: center;
-                          cursor: pointer;
-                        "
+                        style="display: block; text-align: center; cursor: pointer"
                         >{{ item.month }}</span
                       >
                     </a-col>
@@ -44,17 +36,11 @@
               </template>
 
               <template v-for="item in months" :key="item.id">
-                <a href="#" v-if="item.id == month"
-                  >{{ item.month }} {{ year }}</a
-                >
+                <a href="#" v-if="item.id == month">{{ item.month }} {{ year }}</a>
               </template>
             </sdDropdown>
           </span>
-          <sdButton
-            @click="incrementYear"
-            class="btn-navigate"
-            type="light"
-            outlined
+          <sdButton @click="incrementYear" class="btn-navigate" type="light" outlined
             ><unicon name="angle-right"></unicon
           ></sdButton>
         </div>
@@ -86,28 +72,20 @@
           <tr>
             <th>&nbsp;</th>
             <th>
-              <p>{{ dayjs(defaultValue).format("dddd") }}</p>
+              <p>{{ dayjs(defaultValue).format('dddd') }}</p>
             </th>
           </tr>
         </thead>
         <tbody>
           <tr v-for="(time, key) in eventTimes" :key="key + 1">
             <td :style="{ width: '60px' }">{{ time }}</td>
-            <td
-              :class="`ant-picker-calendar-date-content ${
-                dayjs().format('h A') === time ? 'current-data' : null
-              }`"
-            >
-              <span
-                v-if="dayjs().format('h A') === time"
-                class="currentTime secondary"
-              />
+            <td :class="`ant-picker-calendar-date-content ${dayjs().format('h A') === time ? 'current-data' : null}`">
+              <span v-if="dayjs().format('h A') === time" class="currentTime secondary" />
 
               <template v-for="event in events" :key="event.id">
                 <sdDropdown
                   v-if="
-                    dayjs(defaultValue).format('MM/DD/YYYY') ===
-                      event.date[0] &&
+                    dayjs(defaultValue).format('MM/DD/YYYY') === event.date[0] &&
                     time === dayjs(event.time[0], 'h:mm a').format('h A')
                   "
                   class="event-dropdown"
@@ -116,10 +94,7 @@
                   :action="['click']"
                 >
                   <template #overlay>
-                    <ProjectUpdate
-                      :onEventDelete="onEventDelete"
-                      v-bind="event"
-                    />
+                    <ProjectUpdate :onEventDelete="onEventDelete" v-bind="event" />
                   </template>
                   <a to="#" :class="`${event.label} day-event-item`">
                     <span class="event-title">{{ event.title }}</span>
@@ -135,42 +110,42 @@
   </sdCards>
 </template>
 <script>
-import dayjs from "dayjs";
-import { computed, onMounted, ref, defineComponent } from "vue";
-import { useStore } from "vuex";
-import AddNewEvent from "./AddNewEvent";
-import ProjectUpdate from "./ProjectUpdate";
-import "./style.css";
+import dayjs from 'dayjs';
+import { computed, onMounted, ref, defineComponent } from 'vue';
+import { useStore } from 'vuex';
+import AddNewEvent from './AddNewEvent';
+import ProjectUpdate from './ProjectUpdate';
+import './style.css';
 
 const eventTimes = [
-  "12 AM",
-  "1 AM",
-  "2 AM",
-  "3 AM",
-  "4 AM",
-  "5 AM",
-  "6 AM",
-  "7 AM",
-  "8 AM",
-  "9 AM",
-  "10 AM",
-  "11 AM",
-  "12 PM",
-  "1 PM",
-  "2 PM",
-  "3 PM",
-  "4 PM",
-  "5 PM",
-  "6 PM",
-  "7 PM",
-  "8 PM",
-  "9 PM",
-  "10 PM",
-  "11 PM",
+  '12 AM',
+  '1 AM',
+  '2 AM',
+  '3 AM',
+  '4 AM',
+  '5 AM',
+  '6 AM',
+  '7 AM',
+  '8 AM',
+  '9 AM',
+  '10 AM',
+  '11 AM',
+  '12 PM',
+  '1 PM',
+  '2 PM',
+  '3 PM',
+  '4 PM',
+  '5 PM',
+  '6 PM',
+  '7 PM',
+  '8 PM',
+  '9 PM',
+  '10 PM',
+  '11 PM',
 ];
 
 const DayCalendar = defineComponent({
-  name: "DayCalendar",
+  name: 'DayCalendar',
   components: { AddNewEvent, ProjectUpdate },
   setup() {
     const { state, dispatch } = useStore();
@@ -178,18 +153,14 @@ const DayCalendar = defineComponent({
     const isVisible = computed(() => state.calendar.eventVisible);
     const date = ref(new Date());
     const container = ref(null);
-    const defaultValue = ref(dayjs().format("YYYY-MM-DD"));
+    const defaultValue = ref(dayjs().format('YYYY-MM-DD'));
     const year = ref(new Date().getFullYear());
-    const month = ref(parseInt(dayjs().format("M")));
-    const currentLabel = ref(
-      dayjs(`${month.value}-12-${year.value}`).format("MMMM YYYY")
-    );
+    const month = ref(parseInt(dayjs().format('M')));
+    const currentLabel = ref(dayjs(`${month.value}-12-${year.value}`).format('MMMM YYYY'));
 
     const setMonth = (m) => {
       month.value = m;
-      currentLabel.value = dayjs(`${month.value}-12-${year.value}`).format(
-        "MMMM YYYY"
-      );
+      currentLabel.value = dayjs(`${month.value}-12-${year.value}`).format('MMMM YYYY');
     };
 
     const incrementYear = () => {
@@ -198,9 +169,7 @@ const DayCalendar = defineComponent({
         month.value = 1;
         year.value = year.value + 1;
       }
-      currentLabel.value = dayjs(`${month.value}-12-${year.value}`).format(
-        "MMMM YYYY"
-      );
+      currentLabel.value = dayjs(`${month.value}-12-${year.value}`).format('MMMM YYYY');
     };
 
     const decrementYear = () => {
@@ -209,42 +178,33 @@ const DayCalendar = defineComponent({
         month.value = 12;
         year.value = year.value - 1;
       }
-      currentLabel.value = dayjs(`${month.value}-12-${year.value}`).format(
-        "MMMM YYYY"
-      );
+      currentLabel.value = dayjs(`${month.value}-12-${year.value}`).format('MMMM YYYY');
     };
 
     onMounted(() => {
       const button = document.querySelector(
-        ".calendar-header__left .react-calendar__navigation .react-calendar__navigation__label"
+        '.calendar-header__left .react-calendar__navigation .react-calendar__navigation__label',
       );
-      const containers = document.querySelector(
-        ".calendar-header__left .react-calendar__viewContainer"
-      );
-      const calenderDom = document.querySelectorAll(
-        ".ant-picker-calendar-date-content"
-      );
+      const containers = document.querySelector('.calendar-header__left .react-calendar__viewContainer');
+      const calenderDom = document.querySelectorAll('.ant-picker-calendar-date-content');
       calenderDom.forEach((element) => {
-        element.addEventListener("click", (e) => {
-          if (e.target.classList[0] === "ant-picker-calendar-date-content") {
+        element.addEventListener('click', (e) => {
+          if (e.target.classList[0] === 'ant-picker-calendar-date-content') {
             container.value = containers;
-            dispatch("eventVisible", true);
+            dispatch('eventVisible', true);
           }
         });
       });
-      button &&
-        button.addEventListener("click", () =>
-          containers.classList.add("show")
-        );
+      button && button.addEventListener('click', () => containers.classList.add('show'));
       container.value = containers;
     });
     const onEventDelete = (id) => {
       const data = events.value.filter((item) => item.id !== id);
-      dispatch("calendarDeleteData", data);
+      dispatch('calendarDeleteData', data);
     };
 
     const handleCancel = () => {
-      dispatch("eventVisible", false);
+      dispatch('eventVisible', false);
     };
 
     const addNew = (event) => {
@@ -253,8 +213,8 @@ const DayCalendar = defineComponent({
         return arrayData.push(data.id);
       });
       const max = Math.max(...arrayData);
-      dispatch("addNewEvents", [...events.value, { ...event, id: max + 1 }]);
-      dispatch("eventVisible", false);
+      dispatch('addNewEvents', [...events.value, { ...event, id: max + 1 }]);
+      dispatch('eventVisible', false);
     };
     return {
       events,
@@ -272,18 +232,18 @@ const DayCalendar = defineComponent({
       year,
       month,
       months: [
-        { id: 1, month: "January" },
-        { id: 2, month: "February" },
-        { id: 3, month: "March" },
-        { id: 4, month: "April" },
-        { id: 5, month: "May" },
-        { id: 6, month: "Jun" },
-        { id: 7, month: "July" },
-        { id: 8, month: "August" },
-        { id: 9, month: "September" },
-        { id: 10, month: "October" },
-        { id: 11, month: "November" },
-        { id: 12, month: "December" },
+        { id: 1, month: 'January' },
+        { id: 2, month: 'February' },
+        { id: 3, month: 'March' },
+        { id: 4, month: 'April' },
+        { id: 5, month: 'May' },
+        { id: 6, month: 'Jun' },
+        { id: 7, month: 'July' },
+        { id: 8, month: 'August' },
+        { id: 9, month: 'September' },
+        { id: 10, month: 'October' },
+        { id: 11, month: 'November' },
+        { id: 12, month: 'December' },
       ],
       setMonth,
       dayjs,

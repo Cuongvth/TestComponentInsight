@@ -92,13 +92,14 @@
 <script>
 import dayjs from 'dayjs';
 import PropTypes from 'vue-types';
-import { AddEventWrap } from '../Style';
-import { BasicFormWrapper } from '../../../styled';
-import { reactive, toRefs, ref, defineComponent } from 'vue';
+import { AddEventWrap } from './Style';
+import { BasicFormWrapper } from '../../styled';
+import { reactive, toRefs, ref, defineComponent, watch } from 'vue';
 
 const formRef = ref();
 
-const dateFormat = 'YYYY/MM/DD';
+const dateFormat = 'DD/MM/YYYY';
+const timeFormat = 'h:mm a';
 
 const AddNewEvent = defineComponent({
   name: 'AddNewEvent',
@@ -111,8 +112,20 @@ const AddNewEvent = defineComponent({
     const { defaultValue, onHandleAddEvent } = toRefs(props);
     const startDate = ref(dayjs(defaultValue.value, dateFormat));
     const endDate = ref(dayjs(defaultValue.value, dateFormat));
-    const startTime = ref('');
-    const endTime = ref('');
+    const timeStr = defaultValue.value.split(' ')[1] + ' ' + defaultValue.value.split(' ')[2];
+    const startTime = ref(dayjs(timeStr, timeFormat));
+    const endTime = ref(dayjs(timeStr, timeFormat));
+
+    watch(
+      () => props.defaultValue,
+      (newVal) => {
+        startDate.value = dayjs(newVal, dateFormat);
+        endDate.value = dayjs(newVal, dateFormat);
+        const timeStr = defaultValue.value.split(' ')[1] + ' ' + defaultValue.value.split(' ')[2];
+        startTime.value = dayjs(timeStr, timeFormat);
+        endTime.value = dayjs(timeStr, timeFormat);
+      },
+    );
 
     const formItemLayout = reactive({
       labelCol: { span: 4 },
@@ -130,8 +143,8 @@ const AddNewEvent = defineComponent({
       onHandleAddEvent.value({
         title: values.title,
         description: values.description,
-        date: [dayjs(startDate.value).format('MM/DD/YYYY'), dayjs(endDate.value).format('MM/DD/YYYY')],
-        time: [startTime.value.format('HH:mm a'), endTime.value.format('HH:mm a')],
+        date: [dayjs(startDate.value).format('DD/MM/YYYY'), dayjs(endDate.value).format('DD/MM/YYYY')],
+        time: [startTime.value.format('h:mm a'), endTime.value.format('h:mm a')],
         type: values.type,
         label: values.label,
       });
