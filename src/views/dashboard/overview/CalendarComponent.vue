@@ -23,7 +23,9 @@
                   <sdCards>
                     <a-row>
                       <a-col v-for="(item, index) in weeks" :sm="8" :key="index">
-                        <span @click="() => setWeek(index)" style="display: block; text-align: center; cursor: pointer"
+                        <span
+                          @click="() => setWeek(index)"
+                          style="display: block; text-align: center; cursor: pointer; font-weight: 600"
                           >{{ `${dayjs(item.start).format('DD-MM-YYYY')} - ${dayjs(item.end).format('DD-MM-YYYY')}` }}
                         </span>
                       </a-col>
@@ -46,32 +48,36 @@
               <th>&nbsp;</th>
               <th>
                 <p>{{ dayjs(weeks[week].start).format('dddd') }}</p>
+                <p style="font-size: large; font-weight: 700">{{ dayjs(weeks[week].start).date() }}</p>
               </th>
               <th v-for="item in weeks[week].end.diff(weeks[week].start, 'day')" :key="item">
                 <p>{{ dayjs(weeks[week].start.add(item, 'day')).format('dddd') }}</p>
+                <p style="font-size: large; font-weight: 700">{{ dayjs(weeks[week].start.add(item, 'day')).date() }}</p>
               </th>
+              <th>&nbsp;</th>
             </tr>
           </thead>
           <tbody>
             <tr v-for="(time, key) in eventTimes" :key="key + 1">
-              <td :style="{ width: '60px' }">{{ time }}</td>
+              <td>
+                <span>{{ time }}</span>
+              </td>
               <td
                 :class="`ant-picker-calendar-date-content ${dayjs(weeks[week].start).format('DD/MM/YYYY')}-${dayjs(
                   time,
                   'h A',
                 ).format('h:mm:a')}`"
               >
-                <span v-if="dayjs().format('h A') === time" class="currentTime secondary" />
-
                 <template v-for="event in events" :key="event.id">
                   <sdDropdown
                     v-if="
                       dayjs(`${dayjs(weeks[week].start).format('DD/MM/YYYY')} ${time}`, 'DD/MM/YYYY h A') >=
-                        dayjs(`${event.date[0]} ${event.time[0]}`, 'DD/MM/YYYY h:mm a') &&
+                        dayjs(`${event.date[0]} ${event.time[0]}`, 'DD/MM/YYYY h:mm a').startOf('hour') &&
                       dayjs(`${dayjs(weeks[week].start).format('DD/MM/YYYY')} ${time}`, 'DD/MM/YYYY h A').add(
                         1,
                         'hour',
-                      ) <= dayjs(`${event.date[1]} ${event.time[1]}`, 'DD/MM/YYYY h:mm a')
+                      ) <=
+                        dayjs(`${event.date[1]} ${event.time[1]}`, 'DD/MM/YYYY h:mm a').add(1, 'hour').startOf('hour')
                     "
                     class="event-dropdown"
                     style="padding: 0px"
@@ -106,19 +112,17 @@
                 v-for="item in weeks[week].end.diff(weeks[week].start, 'day')"
                 :key="item"
               >
-                <span v-if="dayjs().format('h A') === time" class="currentTime secondary" />
-
                 <template v-for="event in events" :key="event.id">
                   <sdDropdown
                     v-if="
                       dayjs(
                         `${dayjs(weeks[week].start.add(item, 'day')).format('DD/MM/YYYY')} ${time}`,
                         'DD/MM/YYYY h A',
-                      ) >= dayjs(`${event.date[0]} ${event.time[0]}`, 'DD/MM/YYYY h:mm a') &&
+                      ) >= dayjs(`${event.date[0]} ${event.time[0]}`, 'DD/MM/YYYY h:mm a').startOf('hour') &&
                       dayjs(
                         `${dayjs(weeks[week].start.add(item, 'day')).format('DD/MM/YYYY')} ${time}`,
                         'DD/MM/YYYY h A',
-                      ).add(1, 'hour') <= dayjs(`${event.date[1]} ${event.time[1]}`, 'DD/MM/YYYY h:mm a')
+                      ).add(1, 'hour') < dayjs(`${event.date[1]} ${event.time[1]}`, 'DD/MM/YYYY h:mm a').add(1, 'hour')
                     "
                     class="event-dropdown"
                     style="padding: 0px"
@@ -146,6 +150,9 @@
                   </sdDropdown>
                 </template>
               </td>
+              <td>
+                <span style="float: right">{{ time }}</span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -162,6 +169,12 @@ import ProjectUpdate from './ProjectUpdate.vue';
 import './style.css';
 import eventDatas from './events';
 import { CalendarWrapper } from './Style';
+import customParseFormat from 'dayjs/plugin/customParseFormat';
+import weekday from 'dayjs/plugin/weekday';
+import localeData from 'dayjs/plugin/localeData';
+dayjs.extend(customParseFormat);
+dayjs.extend(weekday);
+dayjs.extend(localeData);
 
 const eventTimes = [
   '12 AM',
@@ -222,19 +235,19 @@ loadWeek();
 updateCurrentLabel();
 
 const incrementYear = () => {
-  month.value = month.value + 1;
-  if (month.value > 12) {
-    month.value = 1;
-    year.value = year.value + 1;
+  if (week.value > 1) {
+    week.value = week.value - 1;
+  } else {
+    week.value = weeks.value.length;
   }
   updateCurrentLabel();
 };
 
 const decrementYear = () => {
-  month.value = month.value - 1;
-  if (month.value < 1) {
-    month.value = 12;
-    year.value = year.value - 1;
+  if (week.value < weeks.value.length) {
+    week.value = week.value + 1;
+  } else {
+    week.value = 1;
   }
   updateCurrentLabel();
 };
@@ -258,14 +271,11 @@ const addNew = (event: any) => {
     type: event.type,
     description: event.description,
   });
-  console.log(events.value);
 
   isVisible.value = !isVisible.value;
 };
 
 const updateEvent = (event: any) => {
-  console.log(event.time);
-
   const eventIndex = events.value.findIndex((e) => e.id === event.id);
   events.value[eventIndex] = {
     title: event.title,
